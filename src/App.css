@@ -1,0 +1,956 @@
+:root {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #1a1a1a;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* 1st header row container */
+.header {
+  padding: 1rem 1.5rem;
+  background: #242424;
+  border-bottom: 1px solid #333;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+/* rule 0-255 input container */
+.rule-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* rule 0-255 label */
+.rule-selector label {
+  font-size: 0.9rem;
+}
+
+/* input box for user to enter rule 0-255 */
+.rule-selector input[type="number"] {
+  width: 4.0rem;
+  padding: 0.35rem 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: #1a1a1a;
+  color: inherit;
+}
+
+/* Step Reset buttons & Auto-run checkbox container */
+.controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+/* Step Reset buttons */
+.controls button {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  border: 1px solid #555;
+  background: #333;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* change button color when user hovers mouse over if button is not disabled */
+.controls button:hover:not(:disabled) {
+  border-color: #646cff;
+  background: #404050;
+}
+
+/* if Auto-run checkbox is checked show Step button disabled */
+.controls button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Auto-run checkbox label */
+.controls label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+/* container for user to specify 1 row to view as 0s 1s grouped by whatever specified grouping */
+.row-viewer {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+/* user specified row to view and grouping labels */
+.row-viewer label {
+  font-size: 0.9rem;
+}
+
+/* display length of user specified row */
+.row-viewer .row-length-value {
+  font-size: 0.85rem;
+  font-family: monospace;
+  padding: 0.1rem 0.25rem;
+  border: 1px solid #555;
+  border-radius: 4px;
+  background: #1a1a1a;
+}
+
+/* user specified remove left notes or remove right notes from row */
+.row-length-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* remove left or remove right controls */
+.remove-from-left-right-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+/* user specified start index of row array to be able to cyclically rotate through rhythm */
+.start-index-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* row input box */
+.row-viewer input[type="number"] {
+  width: 4.0rem;
+  padding: 0.35rem 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: #1a1a1a;
+  color: inherit;
+}
+
+/* MIDI controls container - full width, stacks below Row/Group/Display */
+.midi-controls {
+  flex-basis: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.midi-row-scale-select {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.scale-select {
+  padding: 0.35rem 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: #1a1a1a;
+  color: inherit;
+  min-width: 12rem;
+  max-width: 100%;
+}
+
+/* note division next to BPM; same look as scale-select but narrow */
+.tempo-division-select {
+  padding: 0.35rem 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: #1a1a1a;
+  color: inherit;
+  min-width: 4.5rem;
+  max-width: 100%;
+}
+
+.midi-row-notes-tempo {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.midi-transpose-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.tempo-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.randomize-and-cycle-data {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.row-meta-value {
+  font-size: 0.85rem;
+  font-family: monospace;
+  padding: 0.1rem 0.25rem;
+  border: 1px solid #555;
+  border-radius: 4px;
+  background: #1a1a1a;
+}
+
+.midi-row-output-send {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* user input for scale to cycle through when cell is 1 */
+.notes-input {
+  max-width: 12rem;
+  width: 100%;
+  min-width: 0;
+  padding: 0.35rem 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: #1a1a1a;
+  color: inherit;
+}
+
+/* user input for tempo to send midi notes */
+.tempo-input {
+  width: 4rem;
+  padding: 0.35rem 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: #1a1a1a;
+  color: inherit;
+}
+
+/* transpose up/down buttons */
+.transpose-btn {
+  padding: 0.35rem 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: #1a1a1a;
+  color: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.transpose-btn:hover {
+  border-color: #646cff;
+  background: #404050;
+}
+
+/* select midi output device */
+.output-select {
+  padding: 0.35rem 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: #1a1a1a;
+  color: inherit;
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* output selection disabled if web midi not enabled or no output devices found */
+.output-select:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* randomize notes order button */
+.randomize-notes-button {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  border: 1px solid #555;
+  background: #333;
+  color: inherit;
+  cursor: pointer;
+}
+
+.randomize-notes-button:hover {
+  border-color: #646cff;
+  background: #404050;
+}
+
+/* send midi button */
+.send-midi-button {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  border: 1px solid #555;
+  background: #333;
+  color: inherit;
+  cursor: pointer;
+}
+
+.send-midi-button:hover:not(:disabled) {
+  border-color: #646cff;
+  background: #404050;
+}
+
+/* disable send midi button if row is not a valid value */
+.send-midi-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* row output box */
+.row-viewer .row-display {
+  font-family: monospace;
+  font-size: 0.85rem;
+  padding: 0.35rem 0.5rem;
+  max-width: min(300px, 100%);
+  max-height: 3rem;
+  overflow: auto;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: #1a1a1a;
+  white-space: nowrap;
+  user-select: text;
+}
+
+
+/* 2nd header row container */
+.header2-visual {
+  padding: 0.1rem 1.5rem;
+  background: #242424;
+  /* border-bottom: 1px solid #333; */
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  /* gap: 1rem; */
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* each of the 8 possible 3 cell configurations and their result cell container */
+.rule-visual-container {
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+  padding: 0.25rem;
+  margin-top: 10px;
+  margin-right: 1.5rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: #1a1a1a;
+  flex-shrink: 0;
+  width: fit-content;
+}
+
+/* 1 3 cell configuration and its result visual container */
+.rule-visual-segment {
+  display: flex;
+  flex-direction: column; /* 3 cells on top, 1 on bottom */
+  align-items: center;
+  border-right: 1px solid #555;
+  padding: 0 2px;
+}
+
+/* no divider line for furthest to right child */
+.rule-visual-segment:last-child {
+  border-right: none;
+}
+
+/* the top 3 cells of a 3 cell configuration */
+.rule-visual-top {
+  display: flex;
+  gap: 0;
+}
+
+/* the bottom result cell of a 3 cell configuration */
+.rule-visual-bottom {
+  display: flex;
+  justify-content: center;
+}
+
+/* container for each of the rule's cells */
+.rule-visual-container .cell {
+  width: 14px;
+  height: 14px;
+  min-width: 14px;
+  min-height: 14px;
+  border: 1px solid #555;
+}
+
+/* mirror rule, black/white swapped rule, reverse black/white swapped rule container */
+.header2-container {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  /* gap: 1rem; */
+  column-gap: 1rem;
+  row-gap: 0;
+  min-width: 0;
+}
+
+/* container for each of the 3 symmetric rules */
+.rule-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* main area container for displaying evolution of cellular automata */
+.main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  overflow: auto; /* auto enables scrolling */
+}
+
+.scroll-inner {
+  /* inline-block so that container will grow as needed for expanding content */
+  display: inline-block;
+  /* padding 50vw each side centers the grid as it expands */
+  padding-left: 50vw;
+  padding-right: 50vw;
+  min-width: 100%;
+}
+
+/* grid container inside scroll-inner and main classes */
+.grid-container {
+  /* inline-block so that container will grow as needed for expanding content */
+  display: inline-block;
+  width: min-content;
+  overflow: visible; /* expands to fit grid content */
+}
+
+/* the actual grid container for the rows to go into */
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  width: fit-content;
+}
+
+/* 1 row container */
+.grid-row {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+/* 1 cell container */
+.cell {
+  width: 6px;
+  height: 6px;
+  min-width: 6px;
+  min-height: 6px;
+  box-sizing: border-box;
+}
+
+/* 0 display */
+.cell-off {
+  background: #1a1a1a;
+}
+
+/* 1 display */
+.cell-on {
+  background: #e0e0e0;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #f5f5f5;
+  }
+
+  .header {
+    background: #fff;
+    border-bottom-color: #ddd;
+  }
+
+  .rule-selector input[type="number"],
+  .row-viewer input[type="number"],
+  .notes-input,
+  .scale-select,
+  .tempo-division-select,
+  .tempo-input,
+  .transpose-btn,
+  .output-select {
+    background: #f9f9f9;
+    border-color: #ccc;
+  }
+
+  .send-midi-button {
+    background: #f0f0f0;
+    border-color: #ccc;
+  }
+
+  .send-midi-button:hover:not(:disabled) {
+    background: #e5e5ff;
+    border-color: #646cff;
+  }
+
+  .randomize-notes-button {
+    background: #f0f0f0;
+    border-color: #ccc;
+  }
+
+  .randomize-notes-button:hover {
+    background: #e5e5ff;
+    border-color: #646cff;
+  }
+
+  .row-viewer .row-display {
+    background: #f9f9f9;
+    border-color: #ccc;
+  }
+
+  .row-meta-value {
+    background: #f9f9f9;
+    border-color: #ccc;
+  }
+
+  .controls button {
+    background: #f0f0f0;
+    border-color: #ccc;
+  }
+
+  .controls button:hover:not(:disabled) {
+    background: #e5e5ff;
+    border-color: #646cff;
+  }
+
+  .cell-off {
+    background: #f5f5f5;
+  }
+
+  .cell-on {
+    background: #222;
+  }
+
+  .rule-visual-container {
+    background: #f9f9f9;
+    border-color: #ccc;
+  }
+
+  .rule-visual-segment {
+    border-right-color: #ccc;
+  }
+
+  .rule-visual-container .cell {
+    border-color: #ccc;
+  }
+}
+
+@media (max-width: 480px) {
+  .header {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .header2-visual {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .row-viewer .row-display {
+    max-width: 100%;
+  }
+}
+
+/* ---- MIDI sequencing toolbox: nav + home + Wolfram send row + Updown ---- */
+
+.toolbox-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  padding: 0.5rem 1.25rem;
+  background: #1a1a1a;
+  border-bottom: 1px solid #333;
+}
+
+.toolbox-nav-link {
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  font-size: 0.95rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: 6px;
+}
+
+.toolbox-nav-link:hover {
+  background: #333;
+  color: #fff;
+}
+
+.toolbox-nav-link.active {
+  background: #333;
+  color: #a5b4fc;
+}
+
+.rhythm-textarea {
+  width: 100%;
+  max-width: min(100%, 36rem);
+  min-height: 4rem;
+  padding: 0.4rem 0.5rem;
+  font-family: ui-monospace, monospace;
+  font-size: 0.9rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: #1a1a1a;
+  color: inherit;
+  resize: vertical;
+}
+
+.home-midi-panel > label[for="main-rhythm-input"] {
+  width: 100%;
+  margin-top: 0.25rem;
+}
+
+.send-to-main-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.send-to-main-button {
+  padding: 0.45rem 0.75rem;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  border: 1px solid #555;
+  background: #333;
+  color: inherit;
+  cursor: pointer;
+}
+
+.send-to-main-button:hover:not(:disabled) {
+  border-color: #646cff;
+  background: #404050;
+}
+
+.send-to-main-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.send-notes-to-main-updown {
+  align-self: center;
+}
+
+.updown-global-fields {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.scale-preset-row {
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0.15rem;
+}
+
+.scale-preset-row .scale-select {
+  flex: 1;
+  min-width: min(100%, 12rem);
+  max-width: 100%;
+}
+
+.field-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.field-row label {
+  font-size: 0.9rem;
+  min-width: 5.5rem;
+}
+
+.text-input {
+  padding: 0.35rem 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: #1a1a1a;
+  color: inherit;
+}
+
+.scale-input-wide {
+  flex: 1;
+  min-width: min(100%, 18rem);
+  max-width: 100%;
+}
+
+.narrow-num {
+  width: 5rem;
+}
+
+.updown-ops-section {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.section-hint {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.65);
+  max-width: 48rem;
+}
+
+.operation-table-wrap {
+  overflow-x: auto;
+  width: 100%;
+}
+
+.operation-table {
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  width: 100%;
+  max-width: 100%;
+}
+
+.operation-table th,
+.operation-table td {
+  border: 1px solid #555;
+  padding: 0.35rem 0.5rem;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.operation-table th {
+  background: #1a1a1a;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.table-input {
+  width: 100%;
+  min-width: 4rem;
+  max-width: 8rem;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.operation-table .col-remove {
+  width: 2.75rem;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.row-remove-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.3rem;
+  min-width: 2rem;
+  min-height: 2rem;
+  border-radius: 6px;
+  border: 1px solid #555;
+  background: #333;
+  color: rgba(255, 255, 255, 0.85);
+  cursor: pointer;
+}
+
+.row-remove-btn:hover:not(:disabled) {
+  border-color: #f87171;
+  background: #404040;
+  color: #fca5a5;
+}
+
+.row-remove-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.row-remove-icon {
+  display: block;
+  flex-shrink: 0;
+}
+
+.row-actions {
+  margin-top: 0.75rem;
+}
+
+.updown-output-section {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.output-header-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: flex-start;
+  gap: 0.75rem 1.25rem;
+  margin-bottom: 0.35rem;
+}
+
+.output-label {
+  font-size: 0.9rem;
+  margin-bottom: 0;
+}
+
+.output-range-group {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+}
+
+.output-stat {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.output-stat-label {
+  font-size: 0.9rem;
+}
+
+.output-stat-value {
+  font-family: ui-monospace, monospace;
+  font-size: 0.85rem;
+  padding: 0.1rem 0.35rem;
+  border: 1px solid #555;
+  border-radius: 4px;
+  background: #1a1a1a;
+  min-width: 2.25rem;
+  text-align: center;
+}
+
+.output-textarea {
+  width: 100%;
+  max-width: 100%;
+  min-height: 10rem;
+  padding: 0.5rem 0.65rem;
+  font-family: ui-monospace, monospace;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: #1a1a1a;
+  color: inherit;
+  resize: vertical;
+}
+
+.apply-error {
+  margin: 0 0 0.5rem;
+  color: #f87171;
+  font-size: 0.9rem;
+}
+
+@media (prefers-color-scheme: light) {
+  .toolbox-nav {
+    background: #f0f0f0;
+    border-bottom-color: #ddd;
+  }
+
+  .toolbox-nav-link {
+    color: #213547;
+  }
+
+  .toolbox-nav-link:hover,
+  .toolbox-nav-link.active {
+    background: #e5e5e5;
+  }
+
+  .rhythm-textarea,
+  .text-input,
+  .output-textarea,
+  .output-stat-value {
+    background: #f9f9f9;
+    border-color: #ccc;
+  }
+
+  .section-hint {
+    color: rgba(33, 53, 71, 0.7);
+  }
+
+  .apply-error {
+    color: #b91c1c;
+  }
+
+  .operation-table th {
+    background: #f0f0f0;
+  }
+
+  .operation-table th,
+  .operation-table td {
+    border-color: #ccc;
+  }
+
+  .row-remove-btn {
+    background: #f0f0f0;
+    border-color: #ccc;
+    color: #374151;
+  }
+}
