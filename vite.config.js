@@ -5,7 +5,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     allowedHosts: [
-      "https://subprofessional-eastward-alysia.ngrok-free.dev/",
+      "subprofessional-eastward-alysia.ngrok-free.dev",
     ]
   }
 });
