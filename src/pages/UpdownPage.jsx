@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import {
   buildGiantArray,
   formatNoteArray,
@@ -6,17 +6,14 @@ import {
 } from "../lib/updownEngine";
 import { SCALES } from "../lib/scales";
 import { useMainMidi } from "../context/MainMidiContext.jsx";
-
-const DEFAULT_SCALE = "0, 1, 3, 4, 6, 7, 8, 9, 11";
+import {
+  newRowId,
+  useToolboxSessions,
+} from "../context/ToolboxSessionsContext.jsx";
 
 const SCALE_PRESET_KEYS = Object.keys(SCALES).sort((a, b) =>
   a.localeCompare(b)
 );
-
-// generate new row id with date etc each time user creates new row
-function newRowId() {
-  return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
-}
 
 // return int if valid else null
 function parseOptionalInt(str) {
@@ -192,19 +189,23 @@ function computeSequenceOutput({ scaleInput, startNoteInput, repeatsInput, rows 
 
 export function UpdownPage() {
   const { setMainNotes } = useMainMidi();
-  const [scaleInput, setScaleInput] = useState(DEFAULT_SCALE);
-  const [scalePresetKey, setScalePresetKey] = useState("");
-  // note that sequence will start on
-  const [startNoteInput, setStartNoteInput] = useState("48");
-  // # of times to go through all of user's operations before stopping
-  const [repeatsInput, setRepeatsInput] = useState("8");
-  // however many row operations the user wants to specify
-  // initialize with 1 row and blank values
-  const [rows, setRows] = useState(() => [
-    { id: newRowId(), countStr: "", stepStr: "", jumpStr: "" },
-  ]);
-  const [output, setOutput] = useState("");
-  const [applyError, setApplyError] = useState("");
+  const { updown } = useToolboxSessions();
+  const {
+    scaleInput,
+    setScaleInput,
+    scalePresetKey,
+    setScalePresetKey,
+    startNoteInput,
+    setStartNoteInput,
+    repeatsInput,
+    setRepeatsInput,
+    rows,
+    setRows,
+    output,
+    setOutput,
+    applyError,
+    setApplyError,
+  } = updown;
 
   const lastRowCountInputRef = useRef(null);
   const prevRowsLengthRef = useRef(null);

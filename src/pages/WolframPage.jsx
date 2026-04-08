@@ -1,13 +1,12 @@
-import { useState, useCallback, useEffect } from "react";
+import { useMemo } from "react";
 import { RuleSelector } from "../components/RuleSelector.jsx";
 import { GridDisplay } from "../components/GridDisplay.jsx";
 import { RuleVisualization } from "../components/RuleVisualization.jsx";
 import { Controls } from "../components/Controls.jsx";
 import { WolframRowPanel } from "../components/WolframRowPanel.jsx";
 import { useMainMidi } from "../context/MainMidiContext.jsx";
+import { useToolboxSessions } from "../context/ToolboxSessionsContext.jsx";
 import {
-  applyRule,
-  createInitialGrid,
   getReverseRule,
   getSwapBlackWhite,
   getReverseSwapBlackWhite,
@@ -15,32 +14,15 @@ import {
 
 export function WolframPage() {
   const { isSending } = useMainMidi();
-  const initialRule = 30;
-  const [rule, setRule] = useState(initialRule);
-  const [grid, setGrid] = useState(() => createInitialGrid());
-  const [mirrorRule, setMirrorRule] = useState();
-  const [blackWhiteSwappedRule, setBlackWhiteSwappedRule] = useState();
-  const [reverseSwapBlackWhiteRule, setReverseSwapBlackWhiteRule] = useState();
+  const { wolfram } = useToolboxSessions();
+  const { rule, grid, handleRuleChange, handleStep, handleReset } = wolfram;
 
-  const handleRuleChange = useCallback((newRule) => {
-    setRule(newRule);
-    setGrid(createInitialGrid());
-    setMirrorRule(getReverseRule(newRule));
-    setBlackWhiteSwappedRule(getSwapBlackWhite(newRule));
-    setReverseSwapBlackWhiteRule(getReverseSwapBlackWhite(newRule));
-  }, []);
-
-  const handleStep = useCallback(() => {
-    setGrid((prev) => applyRule(prev, rule));
-  }, [rule]);
-
-  const handleReset = useCallback(() => {
-    setGrid(createInitialGrid());
-  }, []);
-
-  useEffect(() => {
-    handleRuleChange(initialRule);
-  }, [handleRuleChange]);
+  const mirrorRule = useMemo(() => getReverseRule(rule), [rule]);
+  const blackWhiteSwappedRule = useMemo(() => getSwapBlackWhite(rule), [rule]);
+  const reverseSwapBlackWhiteRule = useMemo(
+    () => getReverseSwapBlackWhite(rule),
+    [rule]
+  );
 
   return (
     <div className="app">
@@ -61,7 +43,7 @@ export function WolframPage() {
 
       <div className="header2-visual">
         <div className="header2-container">
-          <WolframRowPanel rule={rule} grid={grid} />
+          <WolframRowPanel />
         </div>
       </div>
 

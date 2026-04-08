@@ -1,7 +1,8 @@
-import { useEffect, useMemo, useRef, useState, useCallback } from "react";
+import { useEffect, useMemo, useRef, useCallback } from "react";
 import { getRowAt } from "../lib/cellularAutomata";
 import { SCALES } from "../lib/scales";
 import { useMainMidi } from "../context/MainMidiContext.jsx";
+import { useToolboxSessions } from "../context/ToolboxSessionsContext.jsx";
 import {
   buildEffectiveRowFromCA,
   formatWithGrouping,
@@ -14,22 +15,31 @@ import {
   parseNotesInput,
 } from "../lib/midiParse.js";
 
-export function WolframRowPanel({ rule, grid }) {
+export function WolframRowPanel() {
   const { setMainRhythm, setMainNotes } = useMainMidi();
-
-  const [rowIndexInput, setRowIndexInput] = useState("16");
-  const [groupingInput, setGroupingInput] = useState("");
-  const [removeFromLeftInput, setRemoveFromLeftInput] = useState("0");
-  const [removeFromRightInput, setRemoveFromRightInput] = useState("1");
-  const [startIndexInput, setStartIndexInput] = useState("0");
+  const { wolfram, wolframRow } = useToolboxSessions();
+  const { rule, grid } = wolfram;
+  const {
+    rowIndexInput,
+    setRowIndexInput,
+    groupingInput,
+    setGroupingInput,
+    removeFromLeftInput,
+    setRemoveFromLeftInput,
+    removeFromRightInput,
+    setRemoveFromRightInput,
+    startIndexInput,
+    setStartIndexInput,
+    notesInput,
+    setNotesInput,
+    scaleSelection,
+    setScaleSelection,
+  } = wolframRow;
 
   const rowIndex = parseInt(rowIndexInput, 10);
   const isValidRow = !isNaN(rowIndex) && rowIndex >= 0;
   const grouping = parseInt(groupingInput, 10);
   const hasGrouping = !isNaN(grouping) && grouping >= 1;
-
-  const [notesInput, setNotesInput] = useState(DEFAULT_NOTES_STRING);
-  const [scaleSelection, setScaleSelection] = useState("");
 
   const displayRef = useRef(null);
 
@@ -122,7 +132,7 @@ export function WolframRowPanel({ rule, grid }) {
 
   useEffect(() => {
     setStartIndexInput("0");
-  }, [rule, rowIndexInput]);
+  }, [rule, rowIndexInput, setStartIndexInput]);
 
   const handleScaleSelect = (e) => {
     const scaleName = e.target.value;
