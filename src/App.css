@@ -908,6 +908,305 @@ body {
   font-size: 0.9rem;
 }
 
+/* =============================================================================
+   Graph traversal page (graph_traversal_sequencer)
+   Uses button.controls — not the Home/Wolfram .controls flex container.
+   Layout overrides undo toolbox Wolfram .header2-* flex on this page only.
+   ============================================================================= */
+
+.graph-page .header2-visual {
+  display: block;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  max-width: none;
+  overflow: visible;
+}
+
+.graph-page .header {
+  display: block;
+}
+
+.graph-page .header2-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  min-width: 0;
+}
+
+.graph-page .header2-container:not(.graph-controls-row) {
+  display: block;
+}
+
+.graph-page .header2-container.graph-controls-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem 1rem;
+}
+
+.graph-page .field-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+  color: #bbb;
+}
+
+.graph-select {
+  min-width: 12rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #555;
+  background: #1a1a1a;
+  color: inherit;
+}
+
+.graph-num-input {
+  width: 4.5rem;
+  padding: 0.35rem;
+  border-radius: 6px;
+  border: 1px solid #555;
+  background: #1a1a1a;
+  color: inherit;
+}
+
+.graph-num-input.wide-cap {
+  width: min(100%, 9rem);
+}
+
+button.controls {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  border: 1px solid #555;
+  background: #333;
+  color: inherit;
+  cursor: pointer;
+}
+
+button.controls.primary-send {
+  background: #1e6b3a;
+  border-color: #2a9952;
+}
+
+button.controls:hover:not(:disabled) {
+  border-color: #646cff;
+  background: #404050;
+}
+
+button.controls.primary-send:hover:not(:disabled) {
+  background: #258547;
+  border-color: #34a85f;
+}
+
+.graph-action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: min(100%, 17rem);
+}
+
+.graph-action-buttons > button.controls {
+  margin: 0;
+}
+
+.edge-hint-inline {
+  margin: 0;
+  margin-left: auto;
+  flex: 1 1 12rem;
+  max-width: min(28rem, 100%);
+  text-align: right;
+  color: #9cf;
+  font-size: 0.9rem;
+  line-height: 1.35;
+}
+
+/* Matches graph_traversal_sequencer sandbox */
+.graph-svg-wrap {
+  padding: 0 1rem 1.25rem;
+  width: 100%;
+  max-width: min(1230px, calc(100vw - 2rem));
+  margin: 0 auto;
+}
+
+.graph-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+  touch-action: none;
+}
+
+.edge-hint {
+  margin: 0 1rem 0.5rem;
+  color: #9cf;
+  font-size: 0.9rem;
+}
+
+.section-title {
+  margin: 0 0 0.75rem;
+  font-size: 1rem;
+}
+
+.subsection-title {
+  margin: 1rem 0 0.5rem;
+  font-size: 0.95rem;
+  color: #ffff88;
+}
+
+.matrix-title {
+  margin-top: 1.25rem;
+}
+
+.matrix-wrap {
+  overflow: auto;
+  max-width: 100%;
+}
+
+.adj-matrix-table {
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.adj-matrix-table th,
+.adj-matrix-table td {
+  border: 1px solid #444;
+  padding: 0.25rem 0.5rem;
+  text-align: center;
+}
+
+.adj-matrix-table th {
+  background: #2a2a2a;
+}
+
+.midi-note-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.midi-note-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.85rem;
+}
+
+.midi-note-field input {
+  width: 5rem;
+  padding: 0.35rem;
+  border-radius: 6px;
+  border: 1px solid #555;
+  background: #1a1a1a;
+  color: inherit;
+}
+
+.graph-page .output-label {
+  display: block;
+  margin-top: 0.75rem;
+  margin-bottom: 0.35rem;
+}
+
+.output-textarea.mono {
+  max-width: 56rem;
+  background: #121212;
+  color: #e0e0e0;
+}
+
+.stat-text {
+  margin: 0.25rem 0;
+  color: #aaa;
+}
+
+.warn-text {
+  color: #fa9;
+  margin: 0 0 0.5rem;
+}
+
+.path-lines-hint {
+  margin: 0 0 0.5rem;
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.path-lines-scroll {
+  max-width: 56rem;
+  max-height: min(50vh, 28rem);
+  overflow-y: auto;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: #121212;
+}
+
+.path-lines-empty {
+  margin: 0;
+  padding: 0.75rem 1rem;
+  color: #777;
+  font-size: 0.9rem;
+}
+
+.path-lines-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.path-lines-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.65rem;
+  border-bottom: 1px solid #2a2a2a;
+  cursor: grab;
+  user-select: none;
+}
+
+.path-lines-item:last-child {
+  border-bottom: none;
+}
+
+.path-lines-item:active {
+  cursor: grabbing;
+}
+
+.path-lines-item-dragover {
+  box-shadow: inset 0 3px 0 0 #646cff;
+  background: #1a1f2e;
+}
+
+.path-lines-grip {
+  flex: 0 0 auto;
+  color: #555;
+  font-family: monospace;
+  letter-spacing: -0.05em;
+  font-size: 0.85rem;
+}
+
+.path-lines-code {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: ui-monospace, monospace;
+  font-size: 0.85rem;
+  color: #e0e0e0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.traversal-hint {
+  flex: 1 1 14rem;
+  margin: 0;
+  font-size: 0.8rem;
+  color: #999;
+  line-height: 1.35;
+}
+
+.traversal-hint strong {
+  color: #bbb;
+}
+
 @media (prefers-color-scheme: light) {
   .toolbox-nav {
     background: #f0f0f0;

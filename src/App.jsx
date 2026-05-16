@@ -25,6 +25,9 @@ export default function App() {
         <NavLink to="/updown" className="toolbox-nav-link">
           Up Down
         </NavLink>
+        <NavLink to="/graph" className="toolbox-nav-link">
+          Graph traversal
+        </NavLink>
       </nav>
       <Outlet />
     </div>
