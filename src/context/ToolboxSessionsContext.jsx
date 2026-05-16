@@ -13,6 +13,7 @@ import { DEFAULT_NOTES_STRING } from "../lib/midiParse.js";
 
 const DEFAULT_SCALE = "0, 1, 3, 4, 6, 7, 8, 9, 11";
 
+// row id generator for updown page (UpdownPage) 
 export function newRowId() {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`;
 }
@@ -20,9 +21,11 @@ export function newRowId() {
 const ToolboxSessionsContext = createContext(null);
 
 export function ToolboxSessionsProvider({ children }) {
+  // wolfram page state
   const [rule, setRule] = useState(30);
   const [grid, setGrid] = useState(() => createInitialGrid());
 
+  // useCallback handlers for wolfram page (WolframPage)
   const handleRuleChange = useCallback((newRule) => {
     setRule(newRule);
     setGrid(createInitialGrid());
@@ -36,6 +39,7 @@ export function ToolboxSessionsProvider({ children }) {
     setGrid(createInitialGrid());
   }, []);
 
+  // wolfram page state (WolframRowPanel)
   const [rowIndexInput, setRowIndexInput] = useState("16");
   const [groupingInput, setGroupingInput] = useState("");
   const [removeFromLeftInput, setRemoveFromLeftInput] = useState("0");
@@ -44,6 +48,7 @@ export function ToolboxSessionsProvider({ children }) {
   const [notesInput, setNotesInput] = useState(DEFAULT_NOTES_STRING);
   const [scaleSelection, setScaleSelection] = useState("");
 
+  // updown page state
   const [scaleInput, setScaleInput] = useState(DEFAULT_SCALE);
   const [scalePresetKey, setScalePresetKey] = useState("");
   const [startNoteInput, setStartNoteInput] = useState("48");
@@ -56,6 +61,7 @@ export function ToolboxSessionsProvider({ children }) {
 
   const value = useMemo(
     () => ({
+      // wolfram page (WolframPage)
       wolfram: {
         rule,
         grid,
@@ -63,6 +69,7 @@ export function ToolboxSessionsProvider({ children }) {
         handleStep,
         handleReset,
       },
+      // wolfram row panel (WolframRowPanel)
       wolframRow: {
         rowIndexInput,
         setRowIndexInput,
@@ -79,6 +86,7 @@ export function ToolboxSessionsProvider({ children }) {
         scaleSelection,
         setScaleSelection,
       },
+      // updown page (UpdownPage)
       updown: {
         scaleInput,
         setScaleInput,
@@ -96,6 +104,7 @@ export function ToolboxSessionsProvider({ children }) {
         setApplyError,
       },
     }),
+    // dependencies for useMemo (only include state and handlers that are part of the value)
     [
       rule,
       grid,

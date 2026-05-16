@@ -56,7 +56,7 @@ export function buildEffectiveRowFromCA({
   removeRightInput,
   startIndexInput,
 }) {
-  let row =
-    rowIndex < grid.length ? grid[rowIndex] : getRowAt(rule, rowIndex);
+  // get the 1s 0s for the specified row if not already calculated by displaying, then calculate with getRowAt
+  let row = rowIndex < grid.length ? grid[rowIndex] : getRowAt(rule, rowIndex);
   return applyTrimAndRotate(row, removeLeftInput, removeRightInput, startIndexInput);
 }

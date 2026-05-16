@@ -1,14 +1,18 @@
 import { useEffect, useMemo, useRef, useCallback } from "react";
 import { getRowAt } from "../lib/cellularAutomata";
 import { SCALES } from "../lib/scales";
+// import context from MainMidiContext to send rhythm and notes to main page
 import { useMainMidi } from "../context/MainMidiContext.jsx";
+// import context from ToolboxSessionsContext which this component is wrapped in in main.jsx
 import { useToolboxSessions } from "../context/ToolboxSessionsContext.jsx";
+// import functions from wolframRow
 import {
   buildEffectiveRowFromCA,
   formatWithGrouping,
   rotateRowByStartIndex,
   serializeRhythmForMain,
 } from "../lib/wolframRow.js";
+// import variables, function from midiParse
 import {
   DEFAULT_NOTES_STRING,
   lcm,
@@ -16,8 +20,10 @@ import {
 } from "../lib/midiParse.js";
 
 export function WolframRowPanel() {
+  // destructure state variables and handler functions from MainMidiContext and ToolboxSessionsContext
   const { setMainRhythm, setMainNotes } = useMainMidi();
   const { wolfram, wolframRow } = useToolboxSessions();
+  // further destructure context
   const { rule, grid } = wolfram;
   const {
     rowIndexInput,
@@ -43,21 +49,25 @@ export function WolframRowPanel() {
 
   const displayRef = useRef(null);
 
+  // useMemo for displayRow0s1s, rowLength, hitCount to be calculated only when any of the dependencies change 
   const { displayRow0s1s, rowLength, hitCount } = useMemo(() => {
     if (!isValidRow) {
       return { displayRow0s1s: "—", rowLength: 0, hitCount: 0 };
     }
-    let row =
-      rowIndex < grid.length ? grid[rowIndex] : getRowAt(rule, rowIndex);
+    let row = rowIndex < grid.length ? grid[rowIndex] : getRowAt(rule, rowIndex);
 
     const trimLeft = Math.max(0, parseInt(removeFromLeftInput, 10) || 0);
     const trimRight = Math.max(0, parseInt(removeFromRightInput, 10) || 0);
+    // set row to slice removing from left and right based on what user specified 
     row = row.slice(trimLeft, trimRight > 0 ? -trimRight : undefined);
 
+    // cyclically rotate row to start on start index specified by user
     const startIndex = parseInt(startIndexInput, 10) || 0;
     row = rotateRowByStartIndex(row, startIndex);
 
+    // input is valid return values
     return {
+      // add bracket grouping for rhythm display if user specified grouping size
       displayRow0s1s: formatWithGrouping(row, hasGrouping ? grouping : 0),
       rowLength: row.length,
       hitCount: row.filter((c) => c === 1).length,
@@ -74,6 +84,7 @@ export function WolframRowPanel() {
     startIndexInput,
   ]);
 
+  // validate inputs on blur when user leaves field and set to default values if invalid
   const handleRowBlur = () => {
     if (rowIndexInput === "") {
       setRowIndexInput("0");
@@ -116,46 +127,6 @@ export function WolframRowPanel() {
     if (isNaN(v)) setStartIndexInput("0");
   };
 
-  const handleKeyDown = useCallback((e) => {
-    if ((e.ctrlKey || e.metaKey) && e.key === "a") {
-      e.preventDefault();
-      e.stopPropagation();
-      const sel = window.getSelection();
-      const range = document.createRange();
-      if (displayRef.current) {
-        range.selectNodeContents(displayRef.current);
-        sel.removeAllRanges();
-        sel.addRange(range);
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    setStartIndexInput("0");
-  }, [rule, rowIndexInput, setStartIndexInput]);
-
-  const handleScaleSelect = (e) => {
-    const scaleName = e.target.value;
-    setScaleSelection(scaleName);
-    if (scaleName && SCALES[scaleName]) {
-      setNotesInput(SCALES[scaleName].join(", "));
-    }
-  };
-
-  const handleTransposeDown = () => {
-    const notes = parseNotesInput(notesInput);
-    if (notes.length === 0) return;
-    if (Math.min(...notes) === 0) return;
-    setNotesInput(notes.map((n) => n - 1).join(", "));
-  };
-
-  const handleTransposeUp = () => {
-    const notes = parseNotesInput(notesInput);
-    if (notes.length === 0) return;
-    if (Math.max(...notes) === 127) return;
-    setNotesInput(notes.map((n) => n + 1).join(", "));
-  };
-
   const handleNotesBlur = () => {
     const trimmed = notesInput.trim();
     if (trimmed === "") {
@@ -174,6 +145,52 @@ export function WolframRowPanel() {
     }
   };
 
+  // workaround for ctrl/cmd + a to select all text in the row display div since it's not an input field
+  const handleKeyDown = useCallback((e) => {
+    if ((e.ctrlKey || e.metaKey) && e.key === "a") {
+      e.preventDefault();
+      e.stopPropagation();
+      const sel = window.getSelection();
+      const range = document.createRange();
+      if (displayRef.current) {
+        range.selectNodeContents(displayRef.current);
+        sel.removeAllRanges();
+        sel.addRange(range);
+      }
+    }
+  }, []);
+
+  // reset start index to 0 when the user changes the rule or row index and also have to include setStartIndexInput function since it is used
+  useEffect(() => {
+    setStartIndexInput("0");
+  }, [rule, rowIndexInput, setStartIndexInput]);
+
+  // set notes based on user's selected scale lookup in SCALES dictionary
+  const handleScaleSelect = (e) => {
+    const scaleName = e.target.value;
+    setScaleSelection(scaleName);
+    if (scaleName && SCALES[scaleName]) {
+      setNotesInput(SCALES[scaleName].join(", "));
+    }
+  };
+
+  // transpose all notes down by 1 (if no notes are already 0 and would become negative)
+  const handleTransposeDown = () => {
+    const notes = parseNotesInput(notesInput);
+    if (notes.length === 0) return;
+    if (Math.min(...notes) === 0) return;
+    setNotesInput(notes.map((n) => n - 1).join(", "));
+  };
+
+  // transpose all notes up by 1 (if no notes are already 127 and would be out of midi note range)
+  const handleTransposeUp = () => {
+    const notes = parseNotesInput(notesInput);
+    if (notes.length === 0) return;
+    if (Math.max(...notes) === 127) return;
+    setNotesInput(notes.map((n) => n + 1).join(", "));
+  };
+
+  // swap notes in random order when randomize notes button is pressed
   const handleRandomizeNotes = () => {
     const notes = parseNotesInput(notesInput);
     for (let i = notes.length - 1; i > 0; i--) {
@@ -185,6 +202,7 @@ export function WolframRowPanel() {
 
   const sendRhythmToMain = () => {
     if (!isValidRow) return;
+    // apply rotate and remove from left or right to create row 
     const row = buildEffectiveRowFromCA({
       rule,
       grid,
@@ -194,13 +212,16 @@ export function WolframRowPanel() {
       startIndexInput,
     });
     if (row.length === 0) return;
+    // set MainMidiContext rhythm for Home page
     setMainRhythm(serializeRhythmForMain(row));
   };
 
+  // set MainMidiContext notes for Home page
   const sendNotesToMain = () => {
     setMainNotes(notesInput.trim() || DEFAULT_NOTES_STRING);
   };
 
+  // WolframRowPanel component in WolframPage jsx
   return (
     <div className="row-viewer">
       <label htmlFor="wf-row-input">Row:</label>
@@ -268,7 +289,7 @@ export function WolframRowPanel() {
           />
         </div>
       </div>
-
+      {/* scale, midi notes, transpose up/down buttons */}
       <div className="midi-controls">
         <div className="midi-row-scale-select">
           <label htmlFor="wf-scale-select">Scale:</label>
@@ -279,6 +300,7 @@ export function WolframRowPanel() {
             onChange={handleScaleSelect}
           >
             <option value="">Select a scale...</option>
+            {/* map all scale names for dropdown */}
             {Object.keys(SCALES)
               .sort()
               .map((name) => (
@@ -335,6 +357,7 @@ export function WolframRowPanel() {
             </button>
           </div>
         </div>
+        {/* randomize notes button and # hits, # notes in seq, repeats after displayed values */}
         <div className="randomize-and-cycle-data">
           {(() => {
             const notesCount = parseNotesInput(notesInput).length;
@@ -364,6 +387,7 @@ export function WolframRowPanel() {
             );
           })()}
         </div>
+        {/* send rhythm to main, send notes to main buttons */}
         <div className="send-to-main-row">
           <button
             type="button"

@@ -497,6 +497,7 @@ export function HomeMidiPanel() {
               </svg>
             </button>
           </div>
+          {/* tempo, note division */}
           <div className="tempo-controls">
             <label htmlFor="home-tempo-input">Tempo (BPM):</label>
             <input

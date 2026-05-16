@@ -31,6 +31,7 @@ export function WolframPage() {
         <RuleSelector value={rule} onChange={handleRuleChange} />
         <RuleVisualization rule={rule} />
       </header>
+      {/* rule visualization controls */}
       <div className="header2-visual">
         <div className="header2-container">
           <Controls
@@ -40,13 +41,15 @@ export function WolframPage() {
           />
         </div>
       </div>
-
+      
+      {/* WolframRowPanel component */}
       <div className="header2-visual">
         <div className="header2-container">
           <WolframRowPanel />
         </div>
       </div>
 
+      {/* display mirror, black/white swapped, reverse black/white swapped rules */}
       <div className="header2-visual">
         <div className="header2-container">
           <div className="rule-container">
@@ -64,6 +67,7 @@ export function WolframPage() {
         </div>
       </div>
 
+      {/* rule visualization */}
       <main className="main">
         <div className="scroll-inner">
           <GridDisplay grid={grid} />

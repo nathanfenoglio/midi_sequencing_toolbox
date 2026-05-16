@@ -10,8 +10,8 @@ import { UpdownPage } from "./pages/UpdownPage.jsx";
 
 createRoot(document.getElementById("app")).render(
   <StrictMode>
-    <MainMidiProvider>
-      <ToolboxSessionsProvider>
+    <MainMidiProvider> {/* context for home page */} 
+      <ToolboxSessionsProvider> {/* context for wolfram and updown pages */}
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />}>

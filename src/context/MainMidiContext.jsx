@@ -19,6 +19,7 @@ export function MainMidiProvider({ children }) {
   /** Set by HomeMidiPanel while mounted; tears down scheduler + note-off. */
   const midiStopRef = useRef(null);
 
+  // HomeMidiPanel calls registerMidiStop on mount (the stopPlayback function is passed into it), unregisterMidiStop on unmount
   const registerMidiStop = useCallback((fn) => {
     midiStopRef.current = fn;
   }, []);
