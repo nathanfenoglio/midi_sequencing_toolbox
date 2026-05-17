@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useMainMidi } from "../context/MainMidiContext.jsx";
 import { useGraphSession } from "../context/GraphSessionContext.jsx";
 import {
@@ -20,6 +20,7 @@ import {
   canPlaceNode,
   PALETTE,
 } from "../components/GraphSvgEditor.jsx";
+import { parseGraphNodeMidiNote } from "../lib/graphScale.js";
 import { SCALES } from "../lib/scales.js";
 
 const SCALE_PRESET_KEYS = Object.keys(SCALES).sort((a, b) =>
@@ -69,6 +70,16 @@ export function GraphPage() {
 
   const dragFromIndexRef = useRef(null);
   const [dragOverIndex, setDragOverIndex] = useState(null);
+  const [midiDrafts, setMidiDrafts] = useState({});
+
+  const midiSignature = useMemo(
+    () => nodes.map((n) => `${n.id}:${n.midiNote}`).join("|"),
+    [nodes]
+  );
+
+  useEffect(() => {
+    setMidiDrafts({});
+  }, [midiSignature]);
 
   const concatenatedNotes = useMemo(
     () => flattenPathLinesToString(pathLines),
@@ -382,10 +393,21 @@ export function GraphPage() {
                   type="number"
                   min={0}
                   max={127}
-                  value={n.midiNote}
+                  value={midiDrafts[n.id] ?? String(n.midiNote)}
                   onChange={(e) =>
-                    updateNodeMidi(n.id, Number(e.target.value) || 0)
+                    setMidiDrafts((d) => ({
+                      ...d,
+                      [n.id]: e.target.value,
+                    }))
                   }
+                  onBlur={() => {
+                    const raw = midiDrafts[n.id] ?? String(n.midiNote);
+                    updateNodeMidi(n.id, parseGraphNodeMidiNote(raw));
+                    setMidiDrafts((d) => {
+                      const { [n.id]: _, ...rest } = d;
+                      return rest;
+                    });
+                  }}
                 />
               </label>
             ))}

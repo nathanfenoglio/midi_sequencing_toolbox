@@ -4,6 +4,7 @@ import {
   buildSequentialScaleNotes,
   getScaleDegrees,
   midiNoteForNodeIndex,
+  parseGraphNodeMidiNote,
   randomizeNodeMidiNotes,
 } from "./graphScale.js";
 
@@ -16,6 +17,31 @@ describe("getScaleDegrees", () => {
     const d = getScaleDegrees("Minor pentatonic scale");
     expect(d).not.toBeNull();
     expect(d.length).toBeGreaterThan(0);
+  });
+});
+
+describe("parseGraphNodeMidiNote", () => {
+  it("returns 0 for empty or whitespace", () => {
+    expect(parseGraphNodeMidiNote("")).toBe(0);
+    expect(parseGraphNodeMidiNote("   ")).toBe(0);
+  });
+
+  it("parses valid integers", () => {
+    expect(parseGraphNodeMidiNote("60")).toBe(60);
+    expect(parseGraphNodeMidiNote(" 60 ")).toBe(60);
+  });
+
+  it("returns 0 for non-numeric input", () => {
+    expect(parseGraphNodeMidiNote("abc")).toBe(0);
+  });
+
+  it("uses parseInt prefix for mixed input", () => {
+    expect(parseGraphNodeMidiNote("12abc")).toBe(12);
+  });
+
+  it("clamps to 0..127", () => {
+    expect(parseGraphNodeMidiNote("-5")).toBe(0);
+    expect(parseGraphNodeMidiNote("200")).toBe(127);
   });
 });
 

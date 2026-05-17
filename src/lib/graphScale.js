@@ -7,6 +7,15 @@ export function getScaleDegrees(scaleKey) {
   return arr?.length ? arr : null;
 }
 
+/** @param {string} raw @returns {number} 0..127 */
+export function parseGraphNodeMidiNote(raw) {
+  const trimmed = String(raw).trim();
+  if (trimmed === "") return 0;
+  const n = parseInt(trimmed, 10);
+  if (!Number.isFinite(n)) return 0;
+  return Math.min(127, Math.max(0, n));
+}
+
 /** No scale: use node index; else cycle scale degrees. */
 export function midiNoteForNodeIndex(nodeIndex, scaleDegrees) {
   if (!scaleDegrees?.length) return nodeIndex;
