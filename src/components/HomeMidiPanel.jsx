@@ -32,12 +32,15 @@ export function HomeMidiPanel() {
     setIsSending,
     registerMidiStop,
     unregisterMidiStop,
+    groupingInput,
+    setGroupingInput,
+    removeFromLeftInput,
+    setRemoveFromLeftInput,
+    removeFromRightInput,
+    setRemoveFromRightInput,
+    startIndexInput,
+    setStartIndexInput,
   } = useMainMidi();
-
-  const [groupingInput, setGroupingInput] = useState("");
-  const [removeFromLeftInput, setRemoveFromLeftInput] = useState("0");
-  const [removeFromRightInput, setRemoveFromRightInput] = useState("0");
-  const [startIndexInput, setStartIndexInput] = useState("0");
 
   const grouping = parseInt(groupingInput, 10);
   const hasGrouping = !isNaN(grouping) && grouping >= 1;
