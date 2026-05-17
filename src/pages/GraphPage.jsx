@@ -19,6 +19,11 @@ import {
   canPlaceNode,
   PALETTE,
 } from "../components/GraphSvgEditor.jsx";
+import { SCALES } from "../lib/scales.js";
+
+const SCALE_PRESET_KEYS = Object.keys(SCALES).sort((a, b) =>
+  a.localeCompare(b)
+);
 
 // const CIRCLE_R = 28;
 const CIRCLE_R = 40;
@@ -56,6 +61,8 @@ export function GraphPage() {
     setStartNodeIndex,
     pathLines,
     setPathLines,
+    scaleSelection,
+    selectScale,
   } = useGraphSession();
 
   const dragFromIndexRef = useRef(null);
@@ -326,6 +333,22 @@ export function GraphPage() {
       <div className="header2-visual">
         <div className="header2-container">
           <h2 className="section-title">MIDI note per node</h2>
+          <div className="graph-scale-preset-row field-row">
+            <label htmlFor="graph-scale-select">Scale</label>
+            <select
+              id="graph-scale-select"
+              className="scale-select"
+              value={scaleSelection}
+              onChange={(e) => selectScale(e.target.value)}
+            >
+              <option value="">Select a scale...</option>
+              {SCALE_PRESET_KEYS.map((name) => (
+                <option key={name} value={name}>
+                  {name}
+                </option>
+              ))}
+            </select>
+          </div>
           <div className="midi-note-grid">
             {/* diff color per node index in the nodes array for user to map midi notes to */}
             {nodes.map((n, i) => (

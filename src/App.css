@@ -952,6 +952,14 @@ body {
   color: #bbb;
 }
 
+.graph-page .graph-scale-preset-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.75rem;
+}
+
 .graph-select {
   min-width: 12rem;
   padding: 0.35rem 0.5rem;
