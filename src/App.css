@@ -960,6 +960,11 @@ body {
   margin-bottom: 0.75rem;
 }
 
+.graph-page .graph-notes-meta-label {
+  font-size: 0.85rem;
+  color: #bbb;
+}
+
 .graph-select {
   min-width: 12rem;
   padding: 0.35rem 0.5rem;

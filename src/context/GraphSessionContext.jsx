@@ -132,6 +132,8 @@ export function GraphSessionProvider({ children }) {
     );
   }, []);
 
+  // memoize values to avoid unnecessary re-rendering
+  // value object to pass to context provider includes state and updater functions for graph session
   const value = useMemo(
     () => ({
       nodes,

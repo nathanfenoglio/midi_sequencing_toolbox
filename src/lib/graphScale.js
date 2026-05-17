@@ -23,6 +23,7 @@ export function applyScaleToNodes(nodes, scaleDegrees) {
 /** @param {number} count @param {number[]} scaleDegrees */
 export function buildSequentialScaleNotes(count, scaleDegrees) {
   const L = scaleDegrees.length;
+  // cycle through scale as many times as needed for array of length count
   return Array.from({ length: count }, (_, i) => scaleDegrees[i % L]);
 }
 

@@ -6,6 +6,7 @@ import {
   buildAdjacencyMatrix,
 } from "../lib/graphDerived.js";
 import {
+  countFlattenedNotes,
   flattenPathLinesToString,
   reorderPathLines,
 } from "../lib/flattenPathLines.js";
@@ -71,6 +72,11 @@ export function GraphPage() {
 
   const concatenatedNotes = useMemo(
     () => flattenPathLinesToString(pathLines),
+    [pathLines]
+  );
+
+  const flattenedNoteCount = useMemo(
+    () => countFlattenedNotes(pathLines),
     [pathLines]
   );
 
@@ -320,6 +326,13 @@ export function GraphPage() {
             <button type="button" className="controls" onClick={sendToMain}>
               Send notes to main
             </button>
+            <label className="graph-notes-meta-label"># notes</label>
+            <span
+              className="row-meta-value"
+              aria-label="Notes in flattened paths"
+            >
+              {flattenedNoteCount}
+            </span>
             {/* message to click next node for adding an edge */}
             {edgeFirstId ? (
               <p className="edge-hint edge-hint-inline">

@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  countFlattenedNotes,
   flattenPathLinesToString,
   reorderPathLines,
 } from "./flattenPathLines.js";
@@ -22,6 +23,24 @@ describe("flattenPathLinesToString", () => {
 
   it("skips invalid tokens", () => {
     expect(flattenPathLinesToString(["0, x, 2"])).toBe("0, 2");
+  });
+});
+
+describe("countFlattenedNotes", () => {
+  it("returns 0 for empty array", () => {
+    expect(countFlattenedNotes([])).toBe(0);
+  });
+
+  it("matches flatten token count for multiple paths", () => {
+    const lines = ["0, 1", "2, 3"];
+    expect(countFlattenedNotes(lines)).toBe(4);
+    expect(countFlattenedNotes(lines)).toBe(
+      flattenPathLinesToString(lines).split(", ").length
+    );
+  });
+
+  it("skips invalid tokens", () => {
+    expect(countFlattenedNotes(["0, x, 2"])).toBe(2);
   });
 });
 
