@@ -6,6 +6,7 @@
 export function flattenPathLinesToString(pathLines) {
   if (!Array.isArray(pathLines) || pathLines.length === 0) return "";
 
+  // check that #s are valid and flatten into single array of #s
   const nums = pathLines.flatMap((line) =>
     String(line)
       .split(",")
@@ -15,6 +16,7 @@ export function flattenPathLinesToString(pathLines) {
       .filter((n) => Number.isFinite(n) && n >= 0 && n <= 127)
   );
 
+  // return comma separated string of all of the paths flattened
   return nums.join(", ");
 }
 
@@ -37,7 +39,7 @@ export function reorderPathLines(paths, fromIndex, toIndex) {
   }
 
   const next = [...paths];
-  const [item] = next.splice(fromIndex, 1);
-  next.splice(toIndex, 0, item);
+  const [item] = next.splice(fromIndex, 1); // remove from node from array
+  next.splice(toIndex, 0, item); // insert from node in to index position of array, 0 signifies don't delete any elements
   return next;
 }

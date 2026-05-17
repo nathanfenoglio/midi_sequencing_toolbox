@@ -74,6 +74,8 @@ export function GraphPage() {
     [nodes, edges, undirected]
   );
 
+  // get either 0 or a positive # and either 0 or the last index of nodes 
+  // and then take the minimum of those to make sure not negative and not out of bounds
   const safeStartIndex = Math.min(
     Math.max(0, startNodeIndex),
     Math.max(0, nodes.length - 1)
@@ -84,13 +86,14 @@ export function GraphPage() {
       const { x, y } = svgPoint;
       const hit = findNodeAtPoint(nodes, x, y, CIRCLE_R);
 
-      if (hit) {
+      if (hit) { // found node in nodes
         if (buildMode === "removeNode") {
           removeNodeById(hit.id);
           setEdgeFirstId(null);
           return;
         }
         if (buildMode === "addEdge") {
+          // edgeFirstId boolean used to signify if selecting the 1st or 2nd node of a 2 node operation
           if (!edgeFirstId) {
             setEdgeFirstId(hit.id);
           } else {
@@ -111,7 +114,9 @@ export function GraphPage() {
         return;
       }
 
+      // node not found to already exist and add node mode is on
       if (buildMode === "addNode") {
+        // disallow placement of nodes too close together
         if (canPlaceNode(nodes, x, y, MIN_NODE_DIST)) {
           addNodeAt(x, y);
         }
@@ -129,6 +134,7 @@ export function GraphPage() {
     ]
   );
 
+  // useCallback not necessarily needed for onClick button press
   const generateSequence = useCallback(() => {
     setLastWarning("");
     if (nodes.length === 0) {
@@ -146,13 +152,14 @@ export function GraphPage() {
     let truncated = false;
 
     // dfs to get all possible paths from start node through graph
-    // a path is added when it reaches a dead end or visits a node already in the path
+    // a path is added when it reaches a dead end or visits a node already in the path (cycle)
     const res = terminatedWalks(adjacencyMap, startId, {
       maxPaths: maxTerminatedPaths,
     });
     idPaths = res.paths;
-    truncated = res.truncated;
+    truncated = res.truncated; // whether or not the max paths safety was hit and the output was truncated
 
+    // map nodes to user specified midi note values and create comma separated string
     const lines = idPaths.map((p) => pathToMidiString(p, nodes));
     setPathLines(lines);
 
@@ -176,19 +183,25 @@ export function GraphPage() {
 
   const handlePathDragStart = useCallback((index, e) => {
     dragFromIndexRef.current = index;
+    // signify to browser this is a move operation
     e.dataTransfer.effectAllowed = "move";
+    // set the event object's data to the index of the path being dragged
+    // to access the index in the onDrop event handler that calls handlePathDrop and gets it with .getData
     e.dataTransfer.setData("text/plain", String(index));
   }, []);
 
   const handlePathDragOver = useCallback((index, e) => {
     e.preventDefault();
+    // signify to browser this is a move operation to allow dropping and display correct cursor
     e.dataTransfer.dropEffect = "move";
     setDragOverIndex(index);
   }, []);
 
+  // reoder pathLines when user drags/drops different ordering of paths
   const handlePathDrop = useCallback((dropIndex, e) => {
     e.preventDefault();
     setDragOverIndex(null);
+    // grab the index of the path that you put in browser event object 
     const raw = e.dataTransfer.getData("text/plain");
     let from = parseInt(raw, 10);
     if (Number.isNaN(from)) {
@@ -214,6 +227,7 @@ export function GraphPage() {
         <div className="header2-container graph-controls-row">
           <label className="field-label">
             Mode
+            {/* drop down menu options NO DRAW, ADD NODE, ADD EDGE, REMOVE NODE, REMOVE EDGE */}
             <select
               value={buildMode}
               onChange={(e) => {
@@ -230,6 +244,7 @@ export function GraphPage() {
             </select>
           </label>
 
+          {/* dropdown menu directed/undirected */}
           <label className="field-label">
             Graph
             <select
@@ -242,6 +257,7 @@ export function GraphPage() {
             </select>
           </label>
 
+          {/* start node dropdown dynamically displays the nodes that have been drawn */}
           <label className="field-label">
             Start node index
             <select
@@ -294,6 +310,7 @@ export function GraphPage() {
             <button type="button" className="controls" onClick={sendToMain}>
               Send notes to main
             </button>
+            {/* message to click next node for adding an edge */}
             {edgeFirstId ? (
               <p className="edge-hint edge-hint-inline">
                 Edge step: click second node (same node twice for a self-loop).
@@ -303,10 +320,12 @@ export function GraphPage() {
         </div>
       </div>
 
+      {/* input boxes for midi notes per node that user adds */}
       <div className="header2-visual">
         <div className="header2-container">
           <h2 className="section-title">MIDI note per node</h2>
           <div className="midi-note-grid">
+            {/* diff color per node index in the nodes array for user to map midi notes to */}
             {nodes.map((n, i) => (
               <label key={n.id} className="midi-note-field">
                 <span style={{ color: PALETTE[i % PALETTE.length] }}>
@@ -327,6 +346,7 @@ export function GraphPage() {
         </div>
       </div>
 
+      {/* graph drawing editor space for placing nodes and connecting edges */}
       <div className="graph-svg-wrap">
         <GraphSvgEditor
           nodes={nodes}
@@ -351,7 +371,7 @@ export function GraphPage() {
             Paths (comma-separated MIDI per path)
           </label>
           <p className="path-lines-hint">
-            Drag a row to reorder. Flattened MIDI below updates automatically.
+            Drag a row to reorder. Flattened MIDI based on your reordering
           </p>
           <div
             className="path-lines-scroll"
@@ -367,27 +387,34 @@ export function GraphPage() {
                 Generate to fill.
               </p>
             ) : (
-              <ol
+              // ordered list
+              <ol 
                 id="paths-list"
                 className="path-lines-list"
                 aria-labelledby="paths-list-label"
               >
+                {/* all paths with reorderable drag/drop functionality */}
                 {pathLines.map((line, index) => (
                   <li
                     key={index}
                     className={`path-lines-item${
                       dragOverIndex === index ? " path-lines-item-dragover" : ""
                     }`}
-                    draggable
+                    // draggable signifies to browser to allow user to click and drag the li items
+                    draggable 
+                    // onDragStart, onDragOver, onDrop, onDragEnd are browser built in event hooks
                     onDragStart={(e) => handlePathDragStart(index, e)}
                     onDragOver={(e) => handlePathDragOver(index, e)}
+                    // handlePathDrop reorders pathLines
                     onDrop={(e) => handlePathDrop(index, e)}
                     onDragEnd={handlePathDragEnd}
+                    // not visually displaying the li indexes but this takes care of screen reader functionality
                     aria-label={`Path ${index + 1} of ${pathLines.length}, drag to reorder`}
                   >
                     <span className="path-lines-grip" aria-hidden="true">
                       ::
                     </span>
+                    {/* code html tag like computer code look */}
                     <code className="path-lines-code">{line}</code>
                   </li>
                 ))}

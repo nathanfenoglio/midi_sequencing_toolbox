@@ -14,6 +14,7 @@
  * @returns {{ paths: string[][], truncated: boolean }}
  */
 export function terminatedWalks(adj, startId, options = {}) {
+  // just a maximum # of paths safety net, not being displayed as a user option to change
   const maxPaths =
     options.maxPaths === undefined
       ? 50000

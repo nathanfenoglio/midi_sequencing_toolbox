@@ -17,6 +17,7 @@ const PALETTE = [
 function dist(ax, ay, bx, by) {
   const dx = bx - ax;
   const dy = by - ay;
+  // pythagorean distance formula
   return Math.sqrt(dx * dx + dy * dy);
 }
 
@@ -34,7 +35,7 @@ export function GraphSvgEditor({
   nodes,
   edges,
   undirected,
-  edgeFirstId,
+  edgeFirstId, // for multiple node operations like adding or deleting edges
   circleRadius,
   onSvgPointerDown,
 }) {
@@ -43,11 +44,16 @@ export function GraphSvgEditor({
   const clientToSvg = useCallback((clientX, clientY) => {
     const svg = svgRef.current;
     if (!svg) return { x: clientX, y: clientY };
-    const pt = svg.createSVGPoint();
+    // browser method to create a browser point object
+    const pt = svg.createSVGPoint(); 
     pt.x = clientX;
     pt.y = clientY;
-    const ctm = svg.getScreenCTM();
+    // browser method to get the current transformation matrix (CTM) that maps SVG coordinates to screen coordinates
+    const ctm = svg.getScreenCTM(); 
     if (!ctm) return { x: clientX, y: clientY };
+    // ctm.inverse(): if the browser multiplied the canvas size by 0.5 to fit the window
+    // then the inverse matrix multiplies it by 2 to get back to the original SVG coordinate space
+    // matrixTransform applies the inverse CTM to the point to convert from screen coordinates back to SVG coordinates
     const p = pt.matrixTransform(ctm.inverse());
     return { x: p.x, y: p.y };
   }, []);
@@ -61,6 +67,8 @@ export function GraphSvgEditor({
     [clientToSvg, onSvgPointerDown]
   );
 
+  // create edge pairs to map over for drawing edge lines
+  // only draw line once for undirected edges (use set to track already seen pairs before adding)
   const edgePairs = useMemo(() => {
     const pairs = [];
     const seen = new Set();
@@ -89,7 +97,10 @@ export function GraphSvgEditor({
       aria-label="Graph editor canvas"
       onPointerDown={handlePointerDown}
     >
+      {/* definitions that browser compiles as cached assets to be referenced later */}
       <defs>
+        {/* edge arrow */}
+        {/* markerEnd markerStart use it when drawing the lines */}
         <marker
           id="graph-arrow-green"
           markerUnits="userSpaceOnUse"
@@ -97,8 +108,9 @@ export function GraphSvgEditor({
           markerHeight="32"
           refX="28"
           refY="16"
-          orient="auto"
+          orient="auto" // rotates marker to match angle of edge line
         >
+          {/* edge line */}
           <path
             d="M 0 4 L 28 16 L 0 28 Z"
             fill="#44aa44"
@@ -107,6 +119,7 @@ export function GraphSvgEditor({
             strokeLinejoin="round"
           />
         </marker>
+        {/* arrow edge going in opposite direction */}
         <marker
           id="graph-arrow-green-start"
           markerUnits="userSpaceOnUse"
@@ -134,11 +147,12 @@ export function GraphSvgEditor({
         fill="#151515"
         stroke="#333"
       />
-
+      {/* draw all nodes */}
       {nodes.map((n, i) => {
         const stroke =
           edgeFirstId === n.id ? "#ffffff" : PALETTE[i % PALETTE.length];
         return (
+          // g tag to group circle and text together
           <g key={n.id}>
             <circle
               cx={n.x}
@@ -154,18 +168,24 @@ export function GraphSvgEditor({
               textAnchor="middle"
               fill="#ccc"
               fontSize={23}
+              // pointerEvents none so that text doesn't block pointer events on circle
+              // so that user can click on text and select node
               pointerEvents="none"
             >
+              {/* index or node in nodes as text label in circle */}
               {i}
             </text>
           </g>
         );
       })}
 
+      {/* draw all edges as lines between nodes with arrow marker at end */}
       {edgePairs.map((e, idx) => {
+        // get a (fromId) and b (toId) from browser event object
         const a = nodeById.get(e.fromId);
         const b = nodeById.get(e.toId);
         if (!a || !b) return null;
+        // trim line to circle radius
         const trimmed = trimEdgeToCircles(
           a.x,
           a.y,
@@ -176,6 +196,7 @@ export function GraphSvgEditor({
         if (!trimmed) return null;
 
         return (
+          // draw edge line
           <line
             key={`${e.fromId}-${e.toId}-${idx}`}
             x1={trimmed.x1}
@@ -204,6 +225,7 @@ export function findNodeAtPoint(nodes, x, y, radius) {
   return null;
 }
 
+// I don't believe that excludeId is used for anything
 export function canPlaceNode(nodes, x, y, minDist, excludeId = null) {
   for (const n of nodes) {
     if (n.id === excludeId) continue;
