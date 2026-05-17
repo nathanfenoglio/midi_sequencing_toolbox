@@ -7,6 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { useScreenWakeLock } from "../hooks/useScreenWakeLock.js";
 import { DEFAULT_NOTES_STRING } from "../lib/midiParse.js";
 
 const MainMidiContext = createContext(null);
@@ -15,6 +16,7 @@ export function MainMidiProvider({ children }) {
   const [mainNotes, setMainNotes] = useState(DEFAULT_NOTES_STRING);
   const [mainRhythm, setMainRhythm] = useState("1");
   const [isSending, setIsSending] = useState(false);
+  useScreenWakeLock(isSending);
 
   /** Set by HomeMidiPanel while mounted; tears down scheduler + note-off. */
   const midiStopRef = useRef(null);
