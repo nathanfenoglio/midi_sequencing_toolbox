@@ -2,6 +2,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from "react";
@@ -29,6 +30,15 @@ export function GraphSessionProvider({ children }) {
   const [maxTerminatedPaths, setMaxTerminatedPaths] = useState(50000);
 
   const [lastWarning, setLastWarning] = useState("");
+
+  const [startNodeIndex, setStartNodeIndex] = useState(0);
+  const [pathLines, setPathLines] = useState([]);
+
+  useEffect(() => {
+    if (nodes.length > 0 && startNodeIndex >= nodes.length) {
+      setStartNodeIndex(nodes.length - 1);
+    }
+  }, [nodes.length, startNodeIndex]);
 
   const addNodeAt = useCallback((x, y) => {
     setNodes((prev) => [
@@ -111,6 +121,10 @@ export function GraphSessionProvider({ children }) {
       setMaxTerminatedPaths,
       lastWarning,
       setLastWarning,
+      startNodeIndex,
+      setStartNodeIndex,
+      pathLines,
+      setPathLines,
       addNodeAt,
       removeNodeById,
       addEdgePair,
@@ -126,6 +140,8 @@ export function GraphSessionProvider({ children }) {
       edgeFirstId,
       maxTerminatedPaths,
       lastWarning,
+      startNodeIndex,
+      pathLines,
       addNodeAt,
       removeNodeById,
       addEdgePair,

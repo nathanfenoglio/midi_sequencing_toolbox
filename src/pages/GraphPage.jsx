@@ -52,10 +52,12 @@ export function GraphPage() {
     addEdgePair,
     removeEdgePair,
     updateNodeMidi,
+    startNodeIndex,
+    setStartNodeIndex,
+    pathLines,
+    setPathLines,
   } = useGraphSession();
 
-  const [startNodeIndex, setStartNodeIndex] = useState(0);
-  const [pathLines, setPathLines] = useState([]);
   const dragFromIndexRef = useRef(null);
   const [dragOverIndex, setDragOverIndex] = useState(null);
 
@@ -445,6 +447,7 @@ export function GraphPage() {
               <thead>
                 <tr>
                   <th />
+                  {/* indexes of nodes for header */}
                   {nodes.map((_, j) => (
                     <th key={j}>{j}</th>
                   ))}
@@ -453,7 +456,9 @@ export function GraphPage() {
               <tbody>
                 {adjacencyMatrix.map((row, i) => (
                   <tr key={i}>
-                    <th scope="row">{i}</th>
+                    {/* row label of node index */}
+                    <th scope="row">{i}</th> 
+                    {/* fill in all of the cells for the row */}
                     {row.map((v, j) => (
                       <td key={j}>{v}</td>
                     ))}
