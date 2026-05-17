@@ -63,6 +63,7 @@ export function GraphPage() {
     setPathLines,
     scaleSelection,
     selectScale,
+    randomizeNodeMidi,
   } = useGraphSession();
 
   const dragFromIndexRef = useRef(null);
@@ -348,6 +349,14 @@ export function GraphPage() {
                 </option>
               ))}
             </select>
+            <button
+              type="button"
+              className="randomize-notes-button"
+              onClick={randomizeNodeMidi}
+              disabled={nodes.length === 0}
+            >
+              randomize notes order
+            </button>
           </div>
           <div className="midi-note-grid">
             {/* diff color per node index in the nodes array for user to map midi notes to */}

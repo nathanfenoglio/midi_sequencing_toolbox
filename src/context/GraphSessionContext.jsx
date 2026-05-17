@@ -10,6 +10,7 @@ import {
   applyScaleToNodes,
   getScaleDegrees,
   midiNoteForNodeIndex,
+  randomizeNodeMidiNotes,
 } from "../lib/graphScale.js";
 
 /** @typedef {'noDraw'|'addNode'|'addEdge'|'removeNode'|'removeEdge'} GraphBuildMode */
@@ -72,6 +73,10 @@ export function GraphSessionProvider({ children }) {
       setNodes((prev) => applyScaleToNodes(prev, degrees));
     }
   }, []);
+
+  const randomizeNodeMidi = useCallback(() => {
+    setNodes((prev) => randomizeNodeMidiNotes(prev, scaleSelection));
+  }, [scaleSelection]);
 
   const removeNodeById = useCallback((id) => {
     setNodes((prev) => prev.filter((n) => n.id !== id));
@@ -155,6 +160,7 @@ export function GraphSessionProvider({ children }) {
       moveNode,
       scaleSelection,
       selectScale,
+      randomizeNodeMidi,
     }),
     [
       nodes,
@@ -174,6 +180,7 @@ export function GraphSessionProvider({ children }) {
       updateNodeMidi,
       moveNode,
       selectScale,
+      randomizeNodeMidi,
     ]
   );
 
