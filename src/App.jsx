@@ -28,6 +28,9 @@ export default function App() {
         <NavLink to="/graph" className="toolbox-nav-link">
           Graph
         </NavLink>
+        <NavLink to="/rhythm-compositions" className="toolbox-nav-link">
+          Rhythm Compositions
+        </NavLink>
       </nav>
       <Outlet />
     </div>

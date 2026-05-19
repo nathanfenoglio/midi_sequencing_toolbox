@@ -48,6 +48,20 @@ export function serializeRhythmForMain(row) {
   return row.join(", ");
 }
 
+/**
+ * @param {string} existingMainRhythm
+ * @param {number[]} newRow
+ * @returns {{ ok: true, value: string } | { ok: false }}
+ */
+export function appendRhythmForMain(existingMainRhythm, newRow) {
+  const parsed = parseRhythmInput(existingMainRhythm);
+  if (!parsed.ok) return { ok: false };
+  return {
+    ok: true,
+    value: serializeRhythmForMain([...parsed.row, ...newRow]),
+  };
+}
+
 export function buildEffectiveRowFromCA({
   rule,
   grid,

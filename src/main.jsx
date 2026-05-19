@@ -9,6 +9,7 @@ import { HomePage } from "./pages/HomePage.jsx";
 import { WolframPage } from "./pages/WolframPage.jsx";
 import { UpdownPage } from "./pages/UpdownPage.jsx";
 import { GraphPage } from "./pages/GraphPage.jsx";
+import { RhythmCompositionsPage } from "./pages/RhythmCompositionsPage.jsx";
 
 createRoot(document.getElementById("app")).render(
   <StrictMode>
@@ -22,6 +23,10 @@ createRoot(document.getElementById("app")).render(
             <Route path="wolfram" element={<WolframPage />} />
             <Route path="updown" element={<UpdownPage />} />
             <Route path="graph" element={<GraphPage />} />
+            <Route
+              path="rhythm-compositions"
+              element={<RhythmCompositionsPage />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>

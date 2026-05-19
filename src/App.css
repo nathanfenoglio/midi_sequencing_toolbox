@@ -1208,6 +1208,85 @@ button.controls.primary-send:hover:not(:disabled) {
   word-break: break-all;
 }
 
+/* Rhythm compositions page */
+.rhythm-comp-list .path-lines-item {
+  cursor: pointer;
+}
+
+.rhythm-comp-list .path-lines-item:active {
+  cursor: pointer;
+}
+
+.rhythm-comp-item-selected {
+  background: #1a2f4a;
+  box-shadow: inset 3px 0 0 0 #646cff;
+}
+
+.rhythm-compositions-page .header2-container {
+  max-width: 56rem;
+}
+
+.rhythm-compositions-page .rhythm-displays-stack {
+  flex: 1 1 100%;
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.rhythm-compositions-page .header2-container > .rhythm-side-label-row {
+  flex: 1 1 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.rhythm-side-label-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0.75rem 1rem;
+  margin: 0.75rem 0;
+  max-width: 100%;
+}
+
+.rhythm-side-label-row .path-lines-scroll,
+.rhythm-side-label-row .rhythm-selected-display {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  max-width: none;
+}
+
+.rhythm-compositions-row {
+  align-items: stretch;
+}
+
+.rhythm-side-label {
+  flex: 0 0 auto;
+  margin: 0;
+  padding-top: 0.5rem;
+  font-size: 0.9rem;
+  color: #bbb;
+  white-space: nowrap;
+}
+
+.rhythm-compositions-row .rhythm-side-label {
+  padding-top: 0.75rem;
+}
+
+.rhythm-selected-display {
+  min-height: 2.5rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: #121212;
+}
+
+.rhythm-selected-display .path-lines-code {
+  display: block;
+}
+
 .traversal-hint {
   flex: 1 1 14rem;
   margin: 0;

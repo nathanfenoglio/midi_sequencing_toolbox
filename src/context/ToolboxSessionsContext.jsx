@@ -59,6 +59,13 @@ export function ToolboxSessionsProvider({ children }) {
   const [output, setOutput] = useState("");
   const [applyError, setApplyError] = useState("");
 
+  // rhythm compositions page state
+  const [rhythmSpaceInput, setRhythmSpaceInput] = useState("16");
+  const [rhythmNumNotesInput, setRhythmNumNotesInput] = useState("4");
+  const [rhythmCompositions, setRhythmCompositions] = useState([]);
+  const [rhythmSelectedIndex, setRhythmSelectedIndex] = useState(null);
+  const [rhythmGenerateError, setRhythmGenerateError] = useState("");
+
   const value = useMemo(
     () => ({
       // wolfram page (WolframPage)
@@ -103,6 +110,18 @@ export function ToolboxSessionsProvider({ children }) {
         applyError,
         setApplyError,
       },
+      rhythmCompositionsPage: {
+        rhythmSpaceInput,
+        setRhythmSpaceInput,
+        rhythmNumNotesInput,
+        setRhythmNumNotesInput,
+        rhythmCompositions,
+        setRhythmCompositions,
+        rhythmSelectedIndex,
+        setRhythmSelectedIndex,
+        rhythmGenerateError,
+        setRhythmGenerateError,
+      },
     }),
     // dependencies for useMemo (only include state and handlers that are part of the value)
     [
@@ -125,6 +144,11 @@ export function ToolboxSessionsProvider({ children }) {
       rows,
       output,
       applyError,
+      rhythmSpaceInput,
+      rhythmNumNotesInput,
+      rhythmCompositions,
+      rhythmSelectedIndex,
+      rhythmGenerateError,
     ]
   );
 
