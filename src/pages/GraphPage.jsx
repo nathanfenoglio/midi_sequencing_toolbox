@@ -66,6 +66,7 @@ export function GraphPage() {
     scaleSelection,
     selectScale,
     randomizeNodeMidi,
+    // randomizeNodeMidiNotes,
   } = useGraphSession();
 
   const dragFromIndexRef = useRef(null);
@@ -224,7 +225,7 @@ export function GraphPage() {
     setDragOverIndex(index);
   }, []);
 
-  // reoder pathLines when user drags/drops different ordering of paths
+  // reorder pathLines when user drags/drops different ordering of paths
   const handlePathDrop = useCallback((dropIndex, e) => {
     e.preventDefault();
     setDragOverIndex(null);
@@ -354,11 +355,11 @@ export function GraphPage() {
         </div>
       </div>
 
-      {/* input boxes for midi notes per node that user adds */}
       <div className="header2-visual">
         <div className="header2-container">
           <h2 className="section-title">MIDI note per node</h2>
           <div className="graph-scale-preset-row field-row">
+            {/* scale selector */}
             <label htmlFor="graph-scale-select">Scale</label>
             <select
               id="graph-scale-select"
@@ -373,6 +374,7 @@ export function GraphPage() {
                 </option>
               ))}
             </select>
+            {/* randomize notes button */}
             <button
               type="button"
               className="randomize-notes-button"
@@ -389,11 +391,13 @@ export function GraphPage() {
                 <span style={{ color: PALETTE[i % PALETTE.length] }}>
                   Node {i}
                 </span>
+                {/* input boxes for midi notes per node that user adds */}
                 <input
                   type="number"
                   min={0}
                   max={127}
                   value={midiDrafts[n.id] ?? String(n.midiNote)}
+                  // on change add node id: user midi note value to midiDrafts
                   onChange={(e) =>
                     setMidiDrafts((d) => ({
                       ...d,
@@ -404,6 +408,7 @@ export function GraphPage() {
                     const raw = midiDrafts[n.id] ?? String(n.midiNote);
                     updateNodeMidi(n.id, parseGraphNodeMidiNote(raw));
                     setMidiDrafts((d) => {
+                      // remove the midi note draft for the node that the user is leaving
                       const { [n.id]: _, ...rest } = d;
                       return rest;
                     });

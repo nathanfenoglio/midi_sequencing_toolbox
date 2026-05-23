@@ -15,22 +15,19 @@ createRoot(document.getElementById("app")).render(
   <StrictMode>
     <MainMidiProvider> {/* context for home page */} 
       <ToolboxSessionsProvider> {/* context for wolfram and updown pages */}
-      <GraphSessionProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<App />}>
-            <Route index element={<HomePage />} />
-            <Route path="wolfram" element={<WolframPage />} />
-            <Route path="updown" element={<UpdownPage />} />
-            <Route path="graph" element={<GraphPage />} />
-            <Route
-              path="rhythm-compositions"
-              element={<RhythmCompositionsPage />}
-            />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-      </GraphSessionProvider>
+        <GraphSessionProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<App />}>
+                <Route index element={<HomePage />} />
+                <Route path="wolfram" element={<WolframPage />} />
+                <Route path="updown" element={<UpdownPage />} />
+                <Route path="graph" element={<GraphPage />} />
+                <Route path="rhythm-compositions" element={<RhythmCompositionsPage />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </GraphSessionProvider>
       </ToolboxSessionsProvider>
     </MainMidiProvider>
   </StrictMode>

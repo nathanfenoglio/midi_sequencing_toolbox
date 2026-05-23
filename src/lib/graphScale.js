@@ -55,10 +55,13 @@ export function randomizeNodeMidiNotes(nodes, scaleSelection) {
   if (n === 0) return nodes;
 
   const degrees = getScaleDegrees(scaleSelection);
+  // create note pool from degree to scale translation if user hasn't manually inputted the note values
+  // if the user did input the note values use them for the note pool to randomize
   const pool = degrees
     ? buildSequentialScaleNotes(n, degrees)
-    : Array.from({ length: n }, (_, i) => i);
-  const shuffled = shuffleArray(pool);
+    : nodes.map((n) => n.midiNote);
+
+    const shuffled = shuffleArray(pool);
 
   return nodes.map((node, i) => ({ ...node, midiNote: shuffled[i] }));
 }
