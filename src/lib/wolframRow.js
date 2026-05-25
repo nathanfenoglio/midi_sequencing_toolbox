@@ -48,6 +48,14 @@ export function serializeRhythmForMain(row) {
   return row.join(", ");
 }
 
+/** @param {number[]} row @returns {{ hitCount: number, duration: number }} */
+export function rhythmStats(row) {
+  return {
+    hitCount: row.filter((c) => c === 1).length,
+    duration: row.length,
+  };
+}
+
 /**
  * @param {string} existingMainRhythm
  * @param {number[]} newRow

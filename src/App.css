@@ -1299,6 +1299,96 @@ button.controls.primary-send:hover:not(:disabled) {
   color: #bbb;
 }
 
+/* Morse Code Rhythm page */
+.morse-rhythm-page .header2-container {
+  max-width: 56rem;
+}
+
+.morse-preset-row {
+  margin-bottom: 0.75rem;
+}
+
+.morse-preset-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  color: #ddd;
+  cursor: pointer;
+}
+
+.morse-gap-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 1rem;
+  margin-bottom: 0.35rem;
+}
+
+.morse-gap-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  color: #bbb;
+  min-width: 10rem;
+  cursor: pointer;
+}
+
+.morse-gap-duration {
+  width: 4.5rem;
+}
+
+.morse-text-input {
+  min-height: 4rem;
+}
+
+.morse-readout {
+  min-height: 2.5rem;
+  margin-bottom: 0.75rem;
+  padding: 0.65rem 0.75rem;
+  border: 1px solid #555;
+  border-radius: 6px;
+  background: #121212;
+  max-width: 56rem;
+}
+
+.morse-readout .path-lines-code {
+  display: block;
+}
+
+.morse-rhythm-output-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.75rem 1.25rem;
+  margin-top: 0.75rem;
+}
+
+.morse-rhythm-output-row .output-label {
+  margin: 0;
+}
+
+.morse-group-control {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+}
+
+.morse-rhythm-stats {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem 0.75rem;
+  margin-left: auto;
+}
+
+.morse-rhythm-display {
+  font-family: ui-monospace, monospace;
+  font-size: 0.85rem;
+}
+
 @media (prefers-color-scheme: light) {
   .toolbox-nav {
     background: #f0f0f0;

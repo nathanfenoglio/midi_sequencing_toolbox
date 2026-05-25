@@ -31,6 +31,9 @@ export default function App() {
         <NavLink to="/rhythm-compositions" className="toolbox-nav-link">
           Rhythm Compositions
         </NavLink>
+        <NavLink to="/morse" className="toolbox-nav-link">
+          Morse
+        </NavLink>
       </nav>
       <Outlet />
     </div>
