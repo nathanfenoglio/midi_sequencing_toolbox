@@ -1435,3 +1435,110 @@ button.controls.primary-send:hover:not(:disabled) {
     color: #374151;
   }
 }
+
+/* ===================== Take 2 page ===================== */
+/* Scoped under .take2-page; reuses existing toolbox classes
+   (.text-input, .send-to-main-button, .apply-error) for consistent styling
+   and overrides .header2-visual / .header2-container so sections render as
+   centered, vertically-stacked cards (matching the prototype). */
+
+.take2-page .header2-visual {
+  display: block;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.take2-page .header2-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  background: #242424;
+  border: 1px solid #333;
+  border-radius: 10px;
+  padding: 1rem 1.25rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.take2-page .seq-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: nowrap;
+}
+
+/* keep the "Send notes to main" button to the right of the box, never wrapping
+   below it; the input grows to fill so the button is pinned to the right */
+.take2-page .seq-row .send-to-main-button {
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.take2-page .seq-label {
+  font-size: 0.9rem;
+  white-space: nowrap;
+  min-width: 8.5rem;
+}
+
+.take2-page .seq-input {
+  flex: 1 1 320px;
+  min-width: 0;
+}
+
+.take2-page .param-input {
+  width: 6rem;
+}
+
+.take2-page .replace-input {
+  width: 14rem;
+}
+
+.take2-page .param-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.5rem;
+}
+
+.take2-page .param-row.center {
+  justify-content: center;
+}
+
+.take2-page .param-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
+
+.take2-page .btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.take2-page .btn-row.center {
+  justify-content: center;
+}
+
+.take2-page .controls-btn {
+  padding: 0.5rem 0.9rem;
+  font-size: 0.88rem;
+  border-radius: 6px;
+  border: 1px solid #555;
+  background: #333;
+  color: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.take2-page .controls-btn:hover:not(:disabled) {
+  border-color: #646cff;
+  background: #404050;
+}
+
+.take2-page .controls-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
