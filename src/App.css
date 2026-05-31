@@ -1446,6 +1446,8 @@ button.controls.primary-send:hover:not(:disabled) {
   display: block;
   padding: 1rem 1.5rem;
   border-bottom: 1px solid #2a2a2a;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .take2-page .header2-container {
@@ -1463,8 +1465,12 @@ button.controls.primary-send:hover:not(:disabled) {
 .take2-page .seq-row {
   display: flex;
   align-items: center;
+  /* stretch to the full card width (overrides the inherited align-items:center
+     from the generic .header2-container) so the label/box start at the left and
+     the input grows, leaving room for the Send button on the same row */
+  align-self: stretch;
   gap: 0.75rem;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
 }
 
 /* keep the "Send notes to main" button to the right of the box, never wrapping
@@ -1483,6 +1489,7 @@ button.controls.primary-send:hover:not(:disabled) {
 .take2-page .seq-input {
   flex: 1 1 320px;
   min-width: 0;
+  max-width: 100%;
 }
 
 .take2-page .param-input {
@@ -1490,7 +1497,9 @@ button.controls.primary-send:hover:not(:disabled) {
 }
 
 .take2-page .replace-input {
-  width: 14rem;
+  flex: 1 1 12rem;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .take2-page .param-row {
@@ -1530,7 +1539,8 @@ button.controls.primary-send:hover:not(:disabled) {
   background: #333;
   color: inherit;
   cursor: pointer;
-  white-space: nowrap;
+  white-space: normal;
+  max-width: 100%;
 }
 
 .take2-page .controls-btn:hover:not(:disabled) {
@@ -1541,4 +1551,48 @@ button.controls.primary-send:hover:not(:disabled) {
 .take2-page .controls-btn:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+/* Mobile: stack each field full-width so nothing runs off screen */
+@media (max-width: 480px) {
+  .take2-page .seq-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .take2-page .seq-label {
+    min-width: 0;
+  }
+
+  .take2-page .seq-input {
+    /* reset flex so the 320px basis doesn't become the input HEIGHT in the
+       column-direction seq-row; keep normal single-line input height */
+    flex: 0 0 auto;
+    width: 100%;
+  }
+
+  .take2-page .seq-row .send-to-main-button {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  .take2-page .param-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .take2-page .param-label {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .take2-page .param-input {
+    width: auto;
+    flex: 0 0 8rem;
+  }
+
+  .take2-page .replace-input {
+    flex: 1 1 8rem;
+  }
 }
