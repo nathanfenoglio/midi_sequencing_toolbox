@@ -6,6 +6,7 @@ import {
 } from "../lib/updownEngine";
 import { SCALES } from "../lib/scales";
 import { useMainMidi } from "../context/MainMidiContext.jsx";
+import { useTake2Session } from "../context/Take2SessionContext.jsx";
 import {
   newRowId,
   useToolboxSessions,
@@ -189,6 +190,7 @@ function computeSequenceOutput({ scaleInput, startNoteInput, repeatsInput, rows 
 
 export function UpdownPage() {
   const { setMainNotes } = useMainMidi();
+  const { setSeq1 } = useTake2Session();
   const { updown } = useToolboxSessions();
   const {
     scaleInput,
@@ -537,6 +539,13 @@ export function UpdownPage() {
                 onClick={() => setMainNotes(output.trim() || "")}
               >
                 Send notes to main
+              </button>
+              <button
+                type="button"
+                className="send-to-main-button send-notes-to-main-updown"
+                onClick={() => setSeq1(output.trim() || "")}
+              >
+                Send notes to Take 2
               </button>
             </div>
           </div>

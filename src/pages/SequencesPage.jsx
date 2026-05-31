@@ -550,10 +550,10 @@ export function SequencesPage() {
 
           <div className="btn-row center">
             <button type="button" className="controls-btn" onClick={() => setSeq1(output)}>
-              move to sequence 1
+              move to seq 1
             </button>
             <button type="button" className="controls-btn" onClick={() => setSeq2(output)}>
-              move to sequence 2
+              move to seq 2
             </button>
             <button type="button" className="controls-btn" onClick={() => setHold1(output)}>
               move to hold 1
@@ -583,6 +583,15 @@ export function SequencesPage() {
             <SendToMainButton onClick={() => sendToMain(hold1)} />
           </div>
 
+          <div className="btn-row center">
+            <button type="button" className="controls-btn" onClick={() => setSeq1(hold1)}>
+              move to seq 1
+            </button>
+            <button type="button" className="controls-btn" onClick={() => setSeq2(hold1)}>
+              move to seq 2
+            </button>
+          </div>
+
           <div className="seq-row">
             <label className="seq-label" htmlFor="hold2-box">
               hold this for a sec 2:
@@ -596,6 +605,15 @@ export function SequencesPage() {
               spellCheck={false}
             />
             <SendToMainButton onClick={() => sendToMain(hold2)} />
+          </div>
+
+          <div className="btn-row center">
+            <button type="button" className="controls-btn" onClick={() => setSeq1(hold2)}>
+              move to seq 1
+            </button>
+            <button type="button" className="controls-btn" onClick={() => setSeq2(hold2)}>
+              move to seq 2
+            </button>
           </div>
         </div>
       </div>

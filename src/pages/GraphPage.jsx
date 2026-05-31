@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useMainMidi } from "../context/MainMidiContext.jsx";
 import { useGraphSession } from "../context/GraphSessionContext.jsx";
+import { useTake2Session } from "../context/Take2SessionContext.jsx";
 import {
   buildAdjacencyMap,
   buildAdjacencyMatrix,
@@ -41,6 +42,7 @@ const BUILD_LABELS = [
 
 export function GraphPage() {
   const { setMainNotes } = useMainMidi();
+  const { setSeq1 } = useTake2Session();
   const {
     nodes,
     edges,
@@ -209,6 +211,11 @@ export function GraphPage() {
     setMainNotes(t.length ? t : "");
   }, [concatenatedNotes, setMainNotes]);
 
+  const sendToTake2 = useCallback(() => {
+    const t = concatenatedNotes.trim();
+    setSeq1(t.length ? t : "");
+  }, [concatenatedNotes, setSeq1]);
+
   const handlePathDragStart = useCallback((index, e) => {
     dragFromIndexRef.current = index;
     // signify to browser this is a move operation
@@ -337,6 +344,9 @@ export function GraphPage() {
             </button>
             <button type="button" className="controls" onClick={sendToMain}>
               Send notes to main
+            </button>
+            <button type="button" className="controls" onClick={sendToTake2}>
+              Send notes to Take 2
             </button>
             <label className="graph-notes-meta-label"># notes</label>
             <span
