@@ -93,6 +93,7 @@ export function SequencesPage() {
 
   // ---- sequence 1 operations ----
   const seq1ModByAddBy = () =>
+    // run is defined as a convenient way to useCallback and catch errors throughout the page
     run(() => {
       const v = commaSepStrToIntVector(seq1);
       const m = atoi(seq1ModBy);

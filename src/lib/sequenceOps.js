@@ -6,7 +6,7 @@
  * each a full copy of the pole configuration, so large values would freeze the
  * browser. The original C++ app had no cap.
  */
-export const MAX_HANOI_DISCS = 12;
+export const MAX_HANOI_DISCS = 8;
 
 /**
  * Port of comma_sep_str_to_int_vector. Splits on commas and parses ints.
@@ -23,6 +23,7 @@ export function commaSepStrToIntVector(str) {
     // stoi parses leading integer portion and ignores trailing chars,
     // but throws if there is no leading number at all.
     const trimmed = part.trim();
+    // optional +/- and digit 1 or more
     const match = trimmed.match(/^[+-]?\d+/);
     if (!match) {
       throw new Error(`invalid integer token: "${part}"`);
@@ -156,7 +157,7 @@ export function interleave(allVectors) {
     for (let i = 0; i < numVectors; i++) {
       if (counts[i] > 0) {
         shuffled.push(vectors[i][0]);
-        vectors[i].shift();
+        vectors[i].shift(); // remove 1st element
         counts[i]--;
       }
     }
@@ -177,9 +178,11 @@ export function subsequenceReplace(seq, findVec, replVec) {
   const changed = [];
   for (let i = 0; i < seq.length; i++) {
     let allMatch = true;
+    // if remaining seq is shorter than findVec, can't match
     if (seq.length - i < findVec.length) {
       allMatch = false;
     } else {
+      // check for full match of findVec at this position
       for (let j = 0; j < findVec.length; j++) {
         if (seq[i + j] !== findVec[j]) {
           allMatch = false;
@@ -193,7 +196,7 @@ export function subsequenceReplace(seq, findVec, replVec) {
         changed.push(replVec[j]);
       }
       i = i + findVec.length - 1;
-    } else {
+    } else { // no match, copy original element
       changed.push(seq[i]);
     }
   }

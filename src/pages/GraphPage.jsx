@@ -28,7 +28,6 @@ const SCALE_PRESET_KEYS = Object.keys(SCALES).sort((a, b) =>
   a.localeCompare(b)
 );
 
-// const CIRCLE_R = 28;
 const CIRCLE_R = 40;
 const MIN_NODE_DIST = CIRCLE_R * 4;
 
