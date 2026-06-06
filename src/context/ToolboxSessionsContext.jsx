@@ -52,7 +52,7 @@ export function ToolboxSessionsProvider({ children }) {
   const [scaleInput, setScaleInput] = useState(DEFAULT_SCALE);
   const [scalePresetKey, setScalePresetKey] = useState("");
   const [startNoteInput, setStartNoteInput] = useState("48");
-  const [repeatsInput, setRepeatsInput] = useState("8");
+  const [repeatsInput, setRepeatsInput] = useState("4");
   const [rows, setRows] = useState(() => [
     { id: newRowId(), countStr: "", stepStr: "", jumpStr: "" },
   ]);

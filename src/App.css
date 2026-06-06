@@ -729,6 +729,7 @@ body {
   flex-wrap: wrap;
   gap: 0.5rem;
   min-width: 0;
+  flex-basis: 100%;
 }
 
 .field-row label {
@@ -1334,6 +1335,7 @@ button.controls.primary-send:hover:not(:disabled) {
   align-items: center;
   gap: 0.5rem 1rem;
   margin-bottom: 0.35rem;
+  flex-basis: 100%;
 }
 
 .morse-gap-label {
@@ -1362,6 +1364,7 @@ button.controls.primary-send:hover:not(:disabled) {
   border-radius: 6px;
   background: #121212;
   max-width: 56rem;
+  flex-basis: 100%;
 }
 
 .morse-readout .path-lines-code {

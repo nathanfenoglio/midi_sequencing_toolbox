@@ -402,11 +402,11 @@ export function UpdownPage() {
       <div className="header2-visual">
         <div className="header2-container updown-ops-section">
           {/* some instructions */}
-          <p className="section-hint">
+          {/* <p className="section-hint">
             Row &quot;current note&quot; chains from start note and each row&apos;s calculated ending
             note. The output sequence updates automatically when scale, start note, repeats, and row
             fields are all valid (fully blank rows are skipped).
-          </p>
+          </p> */}
           <div className="operation-table-wrap">
             <table className="operation-table">
               <thead>

@@ -365,19 +365,25 @@ export function MorseRhythmPage() {
             <label className="output-label" htmlFor="morse-rhythm-out">
               Rhythm (0/1)
             </label>
-            <div className="morse-group-control">
-              <label htmlFor="morse-grouping-input">Group:</label>
-              <input
-                id="morse-grouping-input"
-                type="number"
-                min={1}
-                placeholder="—"
-                className="graph-num-input"
-                value={session.groupingInput}
-                onChange={(e) => session.setGroupingInput(e.target.value)}
-                onBlur={handleGroupingBlur}
-              />
-            </div>
+          </div>
+          <div id="morse-rhythm-out" className="morse-readout morse-rhythm-display">
+            {displayRhythm ? (
+              <code className="path-lines-code">{displayRhythm}</code>
+            ) : null}
+          </div>
+
+          <div className="morse-group-control">
+            <label htmlFor="morse-grouping-input">Group:</label>
+            <input
+              id="morse-grouping-input"
+              type="number"
+              min={1}
+              placeholder="—"
+              className="graph-num-input"
+              value={session.groupingInput}
+              onChange={(e) => session.setGroupingInput(e.target.value)}
+              onBlur={handleGroupingBlur}
+            />
             <div className="morse-rhythm-stats" aria-live="polite">
               <label className="row-meta-label"># hits</label>
               <span className="row-meta-value">
@@ -389,11 +395,7 @@ export function MorseRhythmPage() {
               </span>
             </div>
           </div>
-          <div id="morse-rhythm-out" className="morse-readout morse-rhythm-display">
-            {displayRhythm ? (
-              <code className="path-lines-code">{displayRhythm}</code>
-            ) : null}
-          </div>
+
         </div>
       </div>
     </div>

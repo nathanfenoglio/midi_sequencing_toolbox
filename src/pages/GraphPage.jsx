@@ -328,9 +328,7 @@ export function GraphPage() {
           </label> */}
 
           <p className="traversal-hint" role="note">
-            Paths run from the start node until a <strong>dead end</strong> or a step to an
-            already-visited node on that walk (the repeated node is included once, e.g.
-            0, 1, 2, 0).
+            Paths run from the start node until a <strong>dead end</strong> or the path encounters an already visited node (cycle) <br/> All paths are explored and included in output
           </p>
 
           <div className="graph-action-buttons">
