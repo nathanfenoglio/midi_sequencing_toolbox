@@ -377,35 +377,37 @@ export function HomeMidiPanel() {
         placeholder="e.g. 1, 0, 1, 1"
       />
 
-      <label htmlFor="home-grouping-input">Group:</label>
-      <input
-        id="home-grouping-input"
-        type="number"
-        min={1}
-        placeholder="—"
-        value={groupingInput}
-        onChange={(e) => setGroupingInput(e.target.value)}
-        onBlur={handleGroupingBlur}
-      />
-
-      <div
-        ref={displayRef}
-        className="row-display"
-        tabIndex={0}
-        onKeyDown={handleKeyDown}
-      >
-        {displayRow0s1s}
-      </div>
-
-      <div className="start-index-controls">
-        <label htmlFor="home-start-index-input">start index</label>
+      <div className="grouping-row">
+        <label htmlFor="home-grouping-input">Group:</label>
         <input
-          id="home-start-index-input"
+          id="home-grouping-input"
           type="number"
-          value={startIndexInput}
-          onChange={(e) => setStartIndexInput(e.target.value)}
-          onBlur={handleStartIndexBlur}
+          min={1}
+          placeholder="—"
+          value={groupingInput}
+          onChange={(e) => setGroupingInput(e.target.value)}
+          onBlur={handleGroupingBlur}
         />
+
+        <div
+          ref={displayRef}
+          className="row-display"
+          tabIndex={0}
+          onKeyDown={handleKeyDown}
+        >
+          {displayRow0s1s}
+        </div>
+
+        <div className="start-index-controls">
+          <label htmlFor="home-start-index-input">start index</label>
+          <input
+            id="home-start-index-input"
+            type="number"
+            value={startIndexInput}
+            onChange={(e) => setStartIndexInput(e.target.value)}
+            onBlur={handleStartIndexBlur}
+          />
+        </div>
       </div>
 
       <div className="row-length-controls">

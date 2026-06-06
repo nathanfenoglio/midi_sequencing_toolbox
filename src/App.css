@@ -132,12 +132,23 @@ body {
   background: #1a1a1a;
 }
 
+/* home grouping input, display of rhythmic grouping, start index input */
+.grouping-row {
+  flex-basis: 100%; /* take up full row, signifies to start flexing at 100% width */
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
 /* user specified remove left notes or remove right notes from row */
 .row-length-controls {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
   gap: 0.5rem;
+  flex-basis: 100%;
 }
 
 /* remove left or remove right controls */
