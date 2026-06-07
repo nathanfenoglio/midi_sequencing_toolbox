@@ -31,7 +31,7 @@ export function WolframPage() {
         <h1>1D Cellular Automata Midi Sequencer</h1>
         <RuleSelector value={rule} onChange={handleRuleChange} />
         <RuleVisualization rule={rule} />
-        <TutorialLink section="wolfram" />
+        {/* <TutorialLink section="wolfram" /> */}
       </header>
       {/* rule visualization controls */}
       <div className="header2-visual">

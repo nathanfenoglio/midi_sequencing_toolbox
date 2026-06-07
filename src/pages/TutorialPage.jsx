@@ -71,7 +71,7 @@ export function TutorialPage() {
               to the Home page, where you audition and send it out as live MIDI.
               Some also offer "Send notes to Take 2" to push a note sequence into
               the Take 2 page for further manipulation. Explore, and I hope it
-              sparks ideas for your compositions.
+              sparks ideas for your compositions!
             </p>
           </section>
 
@@ -229,6 +229,17 @@ export function TutorialPage() {
                 them.
               </li>
             </ul>
+            <p>
+              For more examples, click the below link
+              <br />
+              <a
+                href="https://www.nathan-fenoglio.com/projects/midiCellularAutomata"
+                target="_blank"
+                rel="noreferrer"
+              >
+                https://www.nathan-fenoglio.com/projects/midiCellularAutomata
+              </a>
+            </p>
           </section>
 
           <section id="updown" className="tutorial-section">
