@@ -4,6 +4,7 @@ import { GridDisplay } from "../components/GridDisplay.jsx";
 import { RuleVisualization } from "../components/RuleVisualization.jsx";
 import { Controls } from "../components/Controls.jsx";
 import { WolframRowPanel } from "../components/WolframRowPanel.jsx";
+import { TutorialLink } from "../components/TutorialLink.jsx";
 import { useMainMidi } from "../context/MainMidiContext.jsx";
 import { useToolboxSessions } from "../context/ToolboxSessionsContext.jsx";
 import {
@@ -30,6 +31,7 @@ export function WolframPage() {
         <h1>1D Cellular Automata Midi Sequencer</h1>
         <RuleSelector value={rule} onChange={handleRuleChange} />
         <RuleVisualization rule={rule} />
+        <TutorialLink section="wolfram" />
       </header>
       {/* rule visualization controls */}
       <div className="header2-visual">

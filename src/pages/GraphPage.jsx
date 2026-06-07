@@ -23,6 +23,7 @@ import {
 } from "../components/GraphSvgEditor.jsx";
 import { parseGraphNodeMidiNote } from "../lib/graphScale.js";
 import { SCALES } from "../lib/scales.js";
+import { TutorialLink } from "../components/TutorialLink.jsx";
 
 const SCALE_PRESET_KEYS = Object.keys(SCALES).sort((a, b) =>
   a.localeCompare(b)
@@ -255,6 +256,7 @@ export function GraphPage() {
     <div className="app graph-page">
       <header className="header">
         <h1>Graph Traversal Sequencer</h1>
+        <TutorialLink section="graph" />
       </header>
 
       <div className="header2-visual">

@@ -37,6 +37,9 @@ export default function App() {
         <NavLink to="/morse" className="toolbox-nav-link">
           Morse
         </NavLink>
+        <NavLink to="/tutorial" className="toolbox-nav-link">
+          Tutorial
+        </NavLink>
       </nav>
       <Outlet />
     </div>

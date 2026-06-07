@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import { useMainMidi } from "../context/MainMidiContext.jsx";
+import { TutorialLink } from "../components/TutorialLink.jsx";
 import { useTake2Session } from "../context/Take2SessionContext.jsx";
 import {
   commaSepStrToIntVector,
@@ -241,6 +242,7 @@ export function SequencesPage() {
     <div className="app take2-page">
       <header className="header">
         <h1>Take 2 Sequences And Do A Bunch Of Stuff</h1>
+        <TutorialLink section="take2" />
       </header>
 
       {error ? (

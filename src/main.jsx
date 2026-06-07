@@ -14,6 +14,7 @@ import { GraphPage } from "./pages/GraphPage.jsx";
 import { RhythmCompositionsPage } from "./pages/RhythmCompositionsPage.jsx";
 import { MorseRhythmPage } from "./pages/MorseRhythmPage.jsx";
 import { SequencesPage } from "./pages/SequencesPage.jsx";
+import { TutorialPage } from "./pages/TutorialPage.jsx";
 
 createRoot(document.getElementById("app")).render(
   <StrictMode>
@@ -32,6 +33,7 @@ createRoot(document.getElementById("app")).render(
                     <Route path="take2" element={<SequencesPage />} />
                     <Route path="rhythm-compositions" element={<RhythmCompositionsPage />} />
                     <Route path="morse" element={<MorseRhythmPage />} />
+                  <Route path="tutorial" element={<TutorialPage />} />
                   </Route>
                 </Routes>
               </BrowserRouter>

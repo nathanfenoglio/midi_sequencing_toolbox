@@ -13,6 +13,7 @@ import {
   appendRhythmForMain,
   serializeRhythmForMain,
 } from "../lib/wolframRow.js";
+import { TutorialLink } from "../components/TutorialLink.jsx";
 
 export function RhythmCompositionsPage() {
   const { mainRhythm, setMainRhythm } = useMainMidi();
@@ -137,6 +138,7 @@ export function RhythmCompositionsPage() {
     <div className="app rhythm-compositions-page">
       <header className="header">
         <h1>Rhythm Compositions</h1>
+        <TutorialLink section="rhythm-compositions" />
       </header>
 
       <div className="header2-visual">

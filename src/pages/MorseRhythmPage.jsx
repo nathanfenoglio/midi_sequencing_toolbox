@@ -8,6 +8,7 @@ import {
   rhythmStats,
   serializeRhythmForMain,
 } from "../lib/wolframRow.js";
+import { TutorialLink } from "../components/TutorialLink.jsx";
 
 export function MorseRhythmPage() {
   const { setMainRhythm } = useMainMidi();
@@ -208,6 +209,7 @@ export function MorseRhythmPage() {
     <div className="app morse-rhythm-page">
       <header className="header">
         <h1>Morse Code Rhythm Generator</h1>
+        <TutorialLink section="morse" />
       </header>
 
       <div className="header2-visual">

@@ -11,6 +11,7 @@ import {
   newRowId,
   useToolboxSessions,
 } from "../context/ToolboxSessionsContext.jsx";
+import { TutorialLink } from "../components/TutorialLink.jsx";
 
 const SCALE_PRESET_KEYS = Object.keys(SCALES).sort((a, b) =>
   a.localeCompare(b)
@@ -335,6 +336,7 @@ export function UpdownPage() {
     <div className="app">
       <header className="header">
         <h1>Up Down Midi Sequencer</h1>
+        <TutorialLink section="updown" />
       </header>
 
       {/* scale, start note, # repeats labels and inputs */}
