@@ -27,7 +27,7 @@ export function GraphSessionProvider({ children }) {
   const [undirected, setUndirected] = useState(false);
   /** @type {[GraphBuildMode, function]} */
   const [buildMode, setBuildMode] = useState(
-    /** @type {GraphBuildMode} */ ("noDraw")
+    /** @type {GraphBuildMode} */ ("addNode")
   );
   /** Pending first node id when adding/removing an edge (two-click). */
   const [edgeFirstId, setEdgeFirstId] = useState(null);
