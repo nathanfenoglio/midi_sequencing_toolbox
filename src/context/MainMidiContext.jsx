@@ -20,6 +20,10 @@ export function MainMidiProvider({ children }) {
   const [removeFromLeftInput, setRemoveFromLeftInput] = useState("0");
   const [removeFromRightInput, setRemoveFromRightInput] = useState("0");
   const [startIndexInput, setStartIndexInput] = useState("0");
+  const [scaleSelection, setScaleSelection] = useState("");
+  const [tempoInput, setTempoInput] = useState("120");
+  const [noteDivision, setNoteDivision] = useState("1/16");
+
   useScreenWakeLock(isSending);
 
   /** Set by HomeMidiPanel while mounted; tears down scheduler + note-off. */
@@ -69,6 +73,12 @@ export function MainMidiProvider({ children }) {
       setRemoveFromRightInput,
       startIndexInput,
       setStartIndexInput,
+      scaleSelection,
+      setScaleSelection,
+      tempoInput,
+      setTempoInput,
+      noteDivision,
+      setNoteDivision,
     }),
     [
       mainNotes,
@@ -81,6 +91,9 @@ export function MainMidiProvider({ children }) {
       removeFromLeftInput,
       removeFromRightInput,
       startIndexInput,
+      scaleSelection,
+      tempoInput,
+      noteDivision,
     ]
   );
 

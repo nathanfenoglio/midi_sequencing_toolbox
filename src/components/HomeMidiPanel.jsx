@@ -40,14 +40,17 @@ export function HomeMidiPanel() {
     setRemoveFromRightInput,
     startIndexInput,
     setStartIndexInput,
+    scaleSelection,
+    setScaleSelection,
+    tempoInput,
+    setTempoInput,
+    noteDivision,
+    setNoteDivision,
   } = useMainMidi();
 
   const grouping = parseInt(groupingInput, 10);
   const hasGrouping = !isNaN(grouping) && grouping >= 1;
 
-  const [scaleSelection, setScaleSelection] = useState("");
-  const [tempoInput, setTempoInput] = useState("120");
-  const [noteDivision, setNoteDivision] = useState("1/16");
   const [outputIndex, setOutputIndex] = useState(0);
   const [outputs, setOutputs] = useState([]);
   const [webMidiEnabled, setWebMidiEnabled] = useState(false);
