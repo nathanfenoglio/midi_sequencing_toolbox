@@ -110,8 +110,11 @@ export function TutorialPage() {
               </li>
               <li>
                 <strong>transpose down / up:</strong> shift every note by one
-                semitone. <strong>randomize notes order:</strong> shuffle the
-                note sequence.
+                semitone. 
+              </li>
+              <li>
+                <strong>randomize notes order:</strong> shuffle the
+                  note sequence.
               </li>
               <li>
                 <strong>Tempo (BPM) and note division (1/16, 1/8, 1/4):</strong>{" "}
@@ -134,7 +137,7 @@ export function TutorialPage() {
             </ul>
             <h3>Sending MIDI out (setup)</h3>
             <p>
-              You need something on your device receiving MIDI. The author uses
+              You need something on your device receiving MIDI. I am using
               Ableton Live (
               <a
                 href="https://www.ableton.com/en/trial/"
@@ -171,6 +174,26 @@ export function TutorialPage() {
                 <strong>macOS:</strong> install with{" "}
                 <code>brew install fluidsynth</code> or{" "}
                 <code>sudo port install fluidsynth</code>.
+              </li>
+              <li>
+                <strong>Android:</strong> install the{" "}
+                <a
+                  href="https://play.google.com/store/apps/details?id=net.volcanomobile.fluidsynthmidi"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  FluidSynth MIDI Synthesizer
+                </a>{" "}
+                app (by Volcano Mobile) from the Google Play Store; it appears as
+                an available MIDI output (a SoundFont <code>.sf2</code> file is
+                required).
+              </li>
+              <li>
+                <strong>iOS:</strong> there is no standalone FluidSynth app.
+                Instead install a MIDI synth such as NS MIDI Player from the App
+                Store to act as the output, and open this app in a Web MIDI
+                Browser (Safari does not support the Web MIDI API) so it can send
+                notes to the synth.
               </li>
             </ul>
             <p>

@@ -76,6 +76,8 @@ Home is where you assemble a rhythm plus a note sequence and send it out as live
 
 - **Windows:** run `choco install fluidsynth`, then run `fluidsynth` to start the synth.
 - **macOS:** install with `brew install fluidsynth` or `sudo port install fluidsynth`.
+- **Android:** install the [FluidSynth MIDI Synthesizer](https://play.google.com/store/apps/details?id=net.volcanomobile.fluidsynthmidi) app (by Volcano Mobile) from the Google Play Store; it appears as an available MIDI output (a SoundFont `.sf2` file is required).
+- **iOS:** there is no standalone FluidSynth app. Instead install a MIDI synth such as NS MIDI Player from the App Store to act as the output, and open this app in a Web MIDI Browser (Safari does not support the Web MIDI API) so it can send notes to the synth.
 
 Once you have internal MIDI ports available (e.g. via LoopBe30), the port will be selectable in the Output dropdown after you click SEND MIDI.
 
