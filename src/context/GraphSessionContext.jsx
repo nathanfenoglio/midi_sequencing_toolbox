@@ -78,6 +78,20 @@ export function GraphSessionProvider({ children }) {
     setNodes((prev) => randomizeNodeMidiNotes(prev, scaleSelection));
   }, [scaleSelection]);
 
+  const resetGraph = useCallback(() => {
+    // set graph state back to initial values when user presses "Clear" button
+    setNodes([]);
+    setEdges([]);
+    setUndirected(false);
+    setBuildMode("addNode");
+    setEdgeFirstId(null);
+    setMaxTerminatedPaths(50000);
+    setLastWarning("");
+    setStartNodeIndex(0);
+    setPathLines([]);
+    setScaleSelection("");
+  }, []);
+
   const removeNodeById = useCallback((id) => {
     setNodes((prev) => prev.filter((n) => n.id !== id));
     setEdges((prev) =>
@@ -163,6 +177,7 @@ export function GraphSessionProvider({ children }) {
       scaleSelection,
       selectScale,
       randomizeNodeMidi,
+      resetGraph,
     }),
     [
       nodes,
@@ -183,6 +198,7 @@ export function GraphSessionProvider({ children }) {
       moveNode,
       selectScale,
       randomizeNodeMidi,
+      resetGraph,
     ]
   );
 

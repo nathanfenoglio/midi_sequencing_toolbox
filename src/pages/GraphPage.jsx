@@ -68,6 +68,7 @@ export function GraphPage() {
     scaleSelection,
     selectScale,
     randomizeNodeMidi,
+    resetGraph,
     // randomizeNodeMidiNotes,
   } = useGraphSession();
 
@@ -391,6 +392,13 @@ export function GraphPage() {
               disabled={nodes.length === 0}
             >
               randomize notes order
+            </button>
+            <button
+              type="button"
+              className="graph-clear-button"
+              onClick={resetGraph}
+            >
+              Clear
             </button>
           </div>
           <div className="midi-note-grid">

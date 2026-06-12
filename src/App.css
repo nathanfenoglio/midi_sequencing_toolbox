@@ -344,6 +344,21 @@ body {
   background: #404050;
 }
 
+.graph-clear-button {
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  border-radius: 6px;
+  border: 1px solid #b91c1c;
+  background: #7f1d1d;
+  color: #fff;
+  cursor: pointer;
+}
+
+.graph-clear-button:hover {
+  border-color: #f87171;
+  background: #991b1b;
+}
+
 /* send midi button */
 .send-midi-button {
   padding: 0.5rem 1rem;
@@ -565,6 +580,17 @@ body {
   .randomize-notes-button:hover {
     background: #e5e5ff;
     border-color: #646cff;
+  }
+
+  .graph-clear-button {
+    background: #fee2e2;
+    border-color: #fca5a5;
+    color: #991b1b;
+  }
+
+  .graph-clear-button:hover {
+    background: #fecaca;
+    border-color: #f87171;
   }
 
   .row-viewer .row-display {
