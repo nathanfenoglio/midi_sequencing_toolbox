@@ -679,6 +679,9 @@ body {
   padding: 0.5rem 1.25rem;
   background: #1a1a1a;
   border-bottom: 1px solid #333;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .toolbox-nav-link {
@@ -1720,7 +1723,7 @@ button.controls.primary-send:hover:not(:disabled) {
 }
 
 .tutorial-section {
-  scroll-margin-top: 1rem;
+  scroll-margin-top: 5rem;
   margin-bottom: 2rem;
   overflow-wrap: break-word;
 }
