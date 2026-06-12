@@ -126,10 +126,32 @@ Draw a graph where nodes are MIDI notes and edges are allowed connections betwee
 
 Hold two note sequences and apply operations to generate new ones. Enter integers (typically MIDI note numbers) comma-separated into sequence 1 and sequence 2.
 
-- **Per-sequence operations:** Mod By Add By and Add By Mod By (apply "mod by" and "add by" in either order), Rotate Left, Rotate Right, Reverse, Sum Inversion (uses the "sum inversion #"), and Tower of Hanoi It (uses "# discs t_o_h").
-- **Replacement:** set "replace this" and "replace with", then apply the replacement to sequence 1 or 2, or use "replace with string" to write the result to the output.
-- **Both-sequence operations:** splice sequences (interleave them), and multiply by scalars, add together, then mod by (using the two scalars and the shared "mod by").
-- **Output and holds:** results land in the output box; use the move buttons to push a value into sequence 1, sequence 2, or the two "hold this for a sec" slots. Every box has a Send notes to main button to push that value to the Home page.
+#### Per-sequence operations
+
+- **Mod By Add By:** apply "mod by" then "add by".
+- **Add By Mod By:** apply "add by" then "mod by".
+- **Rotate Left**
+- **Rotate Right**
+- **Reverse**
+- **Sum Inversion:** uses the "sum inversion #".
+- **Tower of Hanoi It:** uses "# discs t_o_h".
+
+#### Replacement
+
+- Set "replace this" and "replace with" to define the find and replacement values.
+- **apply replacement to sequence 1 or 2:** replaces the matched values within that sequence.
+- **replace with string sequence 1 or 2:** writes the replaced result to the output.
+
+#### Both-sequence operations
+
+- **splice sequences:** interleave the two sequences.
+- **multiply sequences by scalars, add together, mod by:** uses the two scalars and the shared "mod by".
+
+#### Output and holds
+
+- Results land in the output box.
+- Use the move buttons to push a value into sequence 1, sequence 2, or the two "hold this for a sec" slots.
+- Every box has a Send notes to main button to push that value to the Home page.
 
 ### Rhythm Compositions
 

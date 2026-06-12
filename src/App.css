@@ -1722,6 +1722,12 @@ button.controls.primary-send:hover:not(:disabled) {
 .tutorial-section {
   scroll-margin-top: 1rem;
   margin-bottom: 2rem;
+  overflow-wrap: break-word;
+}
+
+.tutorial-section a {
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .tutorial-section h2 {

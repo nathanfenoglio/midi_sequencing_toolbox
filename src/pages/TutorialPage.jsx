@@ -373,28 +373,81 @@ export function TutorialPage() {
               Enter integers (typically MIDI note numbers) comma-separated into
               sequence 1 and sequence 2.
             </p>
+            
+            <h3>Per-sequence operations</h3>
             <ul>
               <li>
-                <strong>Per-sequence operations:</strong> Mod By Add By and Add
-                By Mod By (apply "mod by" and "add by" in either order), Rotate
-                Left, Rotate Right, Reverse, Sum Inversion (uses the "sum
-                inversion #"), and Tower of Hanoi It (uses "# discs t_o_h").
+                <strong>Mod By Add By:</strong> mod each # in sequence by "mod by" value then add "add by" value.
               </li>
               <li>
-                <strong>Replacement:</strong> set "replace this" and "replace
-                with", then apply the replacement to sequence 1 or 2, or use
-                "replace with string" to write the result to the output.
+                <strong>Add By Mod By:</strong> add each # in sequence by "add by" value then mod by "mod by" value.
               </li>
               <li>
-                <strong>Both-sequence operations:</strong> splice sequences
-                (interleave them), and multiply by scalars, add together, then
-                mod by (using the two scalars and the shared "mod by").
+                <strong>Rotate Left:</strong> rotates the sequence to the left with the leftest # wrapping around to the rightest most index
               </li>
               <li>
-                <strong>Output and holds:</strong> results land in the output
-                box; use the move buttons to push a value into sequence 1,
-                sequence 2, or the two "hold this for a sec" slots. Every box has
-                a Send notes to main button to push that value to the Home page.
+                <strong>Rotate Right:</strong> rotates the sequence to the right with the rightest # wrapping around to the first index
+              </li>
+              <li>
+                <strong>Reverse:</strong> reverses sequence
+              </li>
+              <li>
+                <strong>Sum Inversion:</strong> inverts each # in sequence, for instance if # is 3 and "sum inversion #" is 10 then new # will be 10 - 3 = 7.
+              </li>
+              <li>
+                <strong>Tower of Hanoi It:</strong> takes the 1st "# discs t_o_h" # of digits in sequence, maps them to discs, and executes tower of hanoi discs on poles algorithm generating sequence by starting from bottom of poles going left to right on poles for each move until solved.
+                <br />
+                For Tower of Hanoi visualization reference
+                <br />
+                <a
+                  href="https://github.com/nathanfenoglio/tower_of_hanoi_animation"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  https://github.com/nathanfenoglio/tower_of_hanoi_animation
+                </a>
+              </li>
+            </ul>
+
+            <h3>Replacement</h3>
+            <ul>
+              <li>
+                Set "replace this" and "replace with" to define the find and
+                replacement values.
+              </li>
+              <li>
+                <strong>apply replacement to sequence 1 or 2:</strong> replaces
+                the matched values within that sequence.
+              </li>
+              <li>
+                <strong>replace with string sequence 1 or 2:</strong> writes the
+                replaced result to the output.
+              </li>
+            </ul>
+
+            <h3>Both-sequence operations</h3>
+            <ul>
+              <li>
+                <strong>splice sequences:</strong> takes 1 element from 1 sequence and then 1 element from the other sequence repeatedly until both sequences are interleaved.
+              </li>
+              <li>
+                <strong>
+                  multiply sequences by scalars, add together, mod by:
+                </strong>{" "}
+                multiplies each sequence by respective specified scalar, adds sequences together, then mods by "mod by" value.
+              </li>
+            </ul>
+
+            <h3>Output and holds</h3>
+            <ul>
+              <li>Results land in the output box.</li>
+              <li>
+                Use the move buttons to push a value into sequence 1, sequence 2,
+                or the two "hold this for a sec" slots.
+              </li>
+              <li>
+                Every box has a Send notes to main button to push that value to
+                the Home page.
               </li>
             </ul>
           </section>
@@ -441,7 +494,10 @@ export function TutorialPage() {
               </li>
               <li>
                 <strong>Replace rhythm in main:</strong> overwrites the Home page
-                rhythm with the selected one. <strong>Add to rhythm in main:</strong>{" "}
+                rhythm with the selected one. 
+              </li>
+              <li>
+                <strong>Add to rhythm in main:</strong>{" "}
                 appends the selected rhythm to the existing Home rhythm (the Home
                 rhythm must already be valid 0/1 values).
               </li>
