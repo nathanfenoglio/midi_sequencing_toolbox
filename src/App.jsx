@@ -7,11 +7,36 @@ export default function App() {
   const location = useLocation();
   const { stopAllMidi } = useMainMidi();
 
+  // stop midi send if user navigates away from Home page
   useEffect(() => {
     if (location.pathname !== "/") {
       stopAllMidi();
     }
   }, [location.pathname, stopAllMidi]);
+
+  // global button animation when clicked
+  useEffect(() => {
+    const handleClick = (e) => {
+      // cool how you can just use .closest to take care of all buttons in app
+      const btn = e.target.closest("button");
+      if (!btn) return;
+      btn.classList.remove("btn-pop");
+      // force reflow so the animation restarts on rapid repeated clicks
+      void btn.offsetWidth;
+      btn.classList.add("btn-pop");
+    };
+    const handleAnimEnd = (e) => {
+      if (e.animationName === "btnPop") {
+        e.target.classList.remove("btn-pop");
+      }
+    };
+    document.addEventListener("click", handleClick);
+    document.addEventListener("animationend", handleAnimEnd);
+    return () => {
+      document.removeEventListener("click", handleClick);
+      document.removeEventListener("animationend", handleAnimEnd);
+    };
+  }, []);
 
   return (
     <div className="toolbox-root">
@@ -41,6 +66,7 @@ export default function App() {
           Tutorial
         </NavLink>
       </nav>
+      {/* when user clicks page link react router finds associated NavLink and injects it here at Outlet */}
       <Outlet />
     </div>
   );
